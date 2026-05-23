@@ -13,6 +13,8 @@ Everything here is ready to use or adapt. Nothing requires a specific tool chain
 | Tool | What It Is |
 |------|-----------|
 | [RAID Log Template](raid-log-template.xlsx) | A clean, ready-to-use Excel RAID log with tabs for Risks, Assumptions, Issues, and Dependencies. Color-coded, auto-calculating, zero setup required. See the [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) in tpm-templates for how to use it effectively. |
+| [Program Kickoff Checklist](program-kickoff-checklist.md) | Pre-kickoff checklist, recommended agenda with timing, section-by-section facilitation guide, and post-kickoff follow-up checklist. |
+| [Meeting Notes + Action Item Tracker](meeting-notes-action-tracker.md) | Template for capturing decisions, actions, open questions, and risks in a meeting. Includes a running tracker for recurring meetings. |
 
 ---
 
@@ -23,8 +25,6 @@ Everything here is ready to use or adapt. Nothing requires a specific tool chain
 | Tool | What It Will Be |
 |------|----------------|
 | Program Status Report Template | Structured weekly status report in Excel - Red / Yellow / Green, this week, next two weeks, decisions needed, risks flagged. Copy and fill in. |
-| Program Kickoff Checklist | Everything that needs to happen before a program kickoff - checklist format, TPM-owned items called out separately from engineering and product. |
-| Meeting Notes + Action Item Tracker | Simple template for capturing decisions, action items, and owners in a meeting. Built so the output can go directly into a status report. |
 | Stakeholder Map Template | A structured way to map stakeholders by influence, interest, and engagement level at the start of a program. |
 
 ### Scripts and Automation
