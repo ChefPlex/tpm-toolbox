@@ -1,173 +1,161 @@
 # Slack Canvas Status Synthesis
 
-AI-assisted status reporting for TPMs who need to turn Slack noise into a usable weekly update.
+Two scripts that turn Slack into a draft status report.
 
-This workflow learns the structure of a good Slack canvas, then uses that structure to generate a draft status report from current Slack channels and canvases. It is meant to remove the copy/paste tax from status reporting, not replace the TPM's judgment.
+The first script reads an existing status canvas - one that already works, that people actually read - and extracts its structure into a reusable JSON template. The second script uses that template to read your Slack channels and canvases, then returns a draft report matching the format your stakeholders already expect.
 
-The workflow is simple:
-
-1. Start with a status canvas that already works.
-2. Extract the structure into a reusable JSON template.
-3. Generate a draft from current Slack channels and canvases.
-4. Review the draft, verify the facts, and post only after a human pass.
-
-Status reports are supposed to make risk visible. Too often they become a formatting chore. This keeps the useful part and automates the tedious part.
+Claude does the reading and drafting. The Python wrappers handle local files. The TPM reviews before anything goes anywhere.
 
 ---
 
-## What Is Here
+## Why This Exists
 
-| File | Purpose |
-|------|---------|
-| `canvas_template_extractor.py` | Reads an existing Slack canvas and asks Claude to extract the structure into a local JSON template. |
-| `canvas_generator_from_template.py` | Uses a saved template plus Slack channels and canvases to generate a draft report. |
-| `EXAMPLES.md` | Practical examples, wrapper script patterns, review checklist, and measurement ideas. |
-| `.canvas_templates/` | Local storage for extracted templates. Template JSON files are ignored by default so internal program details do not get published by accident. |
+The hard part of status reporting is not the writing. It is pulling a useful signal from a week of Slack noise, tracking down the current state of five concurrent workstreams, and then organizing it into a format that the right people will actually read.
+
+This tool does the first-pass assembly. It reads your sources, applies your template, and produces a draft that is correct enough to edit rather than blank enough to dread. The draft is not the source of truth. Your review is.
 
 ---
 
-## Requirements
-
-This assumes you already have:
+## Prerequisites
 
 - Python 3.9 or later
-- Claude Code CLI installed and authenticated
-- Slack tools configured for Claude, including access to the channels and canvases you pass in
-- Permission to read the source material you are summarizing
+- [Claude CLI](https://docs.claude.ai/reference/claude-cli) installed and on your PATH (or set `CLAUDE_BIN`)
+- Slack MCP connected to your Claude environment
+- Read access to the channels and canvases you want to use
 
-The scripts do not post to Slack, update canvases, or send messages. They generate local draft files only.
+No third-party Python packages required. Everything is stdlib.
 
 ---
 
 ## Setup
 
-From the repo root:
-
 ```bash
-cd tpm-toolbox/slack-canvas-status-synthesis
+cd slack-canvas-status-synthesis
 chmod +x canvas_template_extractor.py canvas_generator_from_template.py
 ```
 
-Claude CLI discovery order:
-
-1. `CLAUDE_BIN` environment variable, if set
-2. `claude` on your `PATH`
-3. `~/.aisuite/bin/claude`
-
-Optional environment variables:
-
-| Variable | Purpose |
-|----------|---------|
-| `CLAUDE_BIN` | Path to Claude CLI if it is not on your `PATH`. |
-| `CLAUDE_ALLOWED_TOOLS` | Comma-separated list of tools to allow for the run. Defaults to read-only Slack tools: `slack_read_channel,slack_read_canvas` for generation and `slack_read_canvas` for extraction. Override this if your local MCP tool names differ. |
-| `CLAUDE_BYPASS_PERMISSIONS=1` | Optional local override for Claude permission prompts. Not recommended for shared or sensitive environments. |
-| `NO_CAFFEINATE=1` | On macOS, disables `caffeinate` wrapping. |
-
-The scripts no longer grant every tool or bypass permissions by default. They also ask Claude to return content to stdout, then the Python wrapper writes the local file. That keeps filesystem permissions out of the Claude call and makes the data boundary cleaner.
+Templates are stored in `.canvas_templates/` inside the tool directory. That folder is git-ignored by default - generated templates can contain internal structure worth reviewing before committing.
 
 ---
 
-## Usage
+## Two-Step Workflow
 
-### 1. Extract a template
+### Step 1: Extract a template from an existing status canvas
 
-Use a Slack canvas that already has the structure you want to reuse.
-
-```bash
-./canvas_template_extractor.py F0ABC123456 weekly_program_status
-```
-
-This writes:
-
-```text
-.canvas_templates/weekly_program_status.json
-```
-
-### 2. Generate a draft report
-
-Use the saved template with one or more Slack channels and canvases.
+Find a status canvas that already works. Extract its structure once.
 
 ```bash
-./canvas_generator_from_template.py weekly_program_status \
-  C0TEAMCHANNEL F0PLANNINGCANVAS
+./canvas_template_extractor.py F0YOURCANVASID your_template_name
 ```
 
-Use comma-separated values for multiple channels or canvases:
+This reads the canvas, extracts the format without retaining confidential content, and writes a JSON template to `.canvas_templates/your_template_name.json`.
+
+Run this once per template. Re-run if the status format changes significantly.
+
+**Options:**
+
+| Flag | What It Does |
+|------|-------------|
+| `--template-dir PATH` | Use a different directory for templates |
+| `--timeout N` | Claude timeout in seconds (default: 180) |
+| `--save-prompt PATH` | Write the prompt to a file before running |
+| `--dry-run` | Print the prompt and exit without calling Claude |
+| `--allow-sensitive-examples` | Allow representative source examples in the template (off by default) |
+
+---
+
+### Step 2: Generate a draft from current Slack sources
 
 ```bash
-./canvas_generator_from_template.py weekly_program_status \
-  C0TEAMCHANNEL,C0SECURITYCHANNEL \
-  F0PLANNINGCANVAS,F0RISKCANVAS \
-  --output weekly_status_2026_05_24.md \
+./canvas_generator_from_template.py your_template_name \
+  C0CHANNEL1,C0CHANNEL2 F0CANVAS1,F0CANVAS2
+```
+
+Reads the channels and canvases you specify, applies the extracted template, and writes a draft markdown file. Default output name is `your_template_name_draft.md` in the tool directory.
+
+Use `none` on either position if you only have channels or only have canvases:
+
+```bash
+# Channels only
+./canvas_generator_from_template.py your_template_name C0CHAN1,C0CHAN2 none
+
+# Canvases only
+./canvas_generator_from_template.py your_template_name none F0CANVAS1
+```
+
+**Options:**
+
+| Flag | What It Does |
+|------|-------------|
+| `--output PATH` | Custom output path for the draft |
+| `--lookback N` | Days to look back in channels (default: from template, then 7) |
+| `--template-dir PATH` | Use a different directory for templates |
+| `--timeout N` | Claude timeout in seconds (default: 300) |
+| `--save-prompt PATH` | Write the prompt to a file before running |
+| `--dry-run` | Print the prompt and exit without calling Claude |
+
+---
+
+## Environment Variables
+
+| Variable | What It Does |
+|----------|-------------|
+| `CLAUDE_BIN` | Path to Claude CLI if not on PATH |
+| `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist |
+| `CLAUDE_BYPASS_PERMISSIONS` | Set to `1` to enable bypass mode (off by default) |
+| `NO_CAFFEINATE` | Set to `1` to skip caffeinate on macOS |
+
+By default, the extractor allows only `slack_read_canvas` and the generator allows only `slack_read_channel,slack_read_canvas`. This is intentional. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
+
+---
+
+## Weekly Wrapper Pattern
+
+For repeat use, wrap the command so the inputs are not retyped every week:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+TEMPLATE="weekly_program_status"
+CHANNELS="C0PROGRAMCHANNEL,C0SECURITYCHANNEL"
+CANVASES="F0PLANNINGCANVAS,F0RISKCANVAS"
+OUTPUT="weekly_status_$(date +%Y_%m_%d).md"
+
+cd "$(dirname "$0")"
+
+./canvas_generator_from_template.py "$TEMPLATE" \
+  "$CHANNELS" "$CANVASES" \
+  --output "$OUTPUT" \
   --lookback 7
-```
 
-Use `none` when one side is not needed:
-
-```bash
-./canvas_generator_from_template.py weekly_program_status \
-  C0TEAMCHANNEL none
+echo "Draft ready: $OUTPUT"
+echo "Review before posting. The tool writes drafts, not truth."
 ```
 
 ---
 
-## Hallucination Controls
+## What Comes Out
 
-The prompt tells Claude not to invent ticket IDs, dates, owners, metrics, links, or status claims. That lowers the risk. It does not eliminate it.
+A markdown draft matching the structure of your source template. Required sections are always present. Optional sections appear only when there is source material to support them. If a required fact is missing or conflicting, the draft includes a `Needs Review` section naming the gap rather than filling it with something plausible.
 
-Treat every generated report as a draft. Before posting, verify:
+Before you send it, check:
 
-- Ticket IDs and links
-- Dates and milestones
-- Metric values
-- Owner names
-- Red / Yellow / Green status
-- Risks, blockers, and decision requests
-- Any executive-facing statement that could trigger work or escalation
+- Is the Green / Yellow / Red status defensible?
+- Are the dates and owners current?
+- Are blockers written as decision points, not vague concerns?
+- Did the draft miss anything that happened outside Slack?
 
-The tool can draft the report. The TPM still owns the truth.
+The output should save time. It does not get a free pass.
 
 ---
 
-## Where This Breaks
+## See Also
 
-This works best when the source channels already contain useful signal: decisions, blockers, dates, owners, ticket IDs, and clear program updates.
-
-It works poorly when the source material is mostly chatter, when teams use inconsistent naming, or when important work happens outside Slack. In those cases, the generated draft may look polished while still missing the actual risk.
-
-That is the failure mode to watch for: a clean report that is wrong because the source material was incomplete.
+- [EXAMPLES.md](EXAMPLES.md) - Five worked examples: weekly status, security remediation rollup, executive brief, incident follow-up, daily pulse
+- [tpm-templates](https://github.com/ChefPlex/tpm-templates) - The Communications Plan template defines the cadence this tool supports
+- [program-reporting-frameworks](https://github.com/ChefPlex/program-reporting-frameworks) - The Status Reporting Framework explains what goes in each section and why
 
 ---
 
-## Review Bar
-
-Before you send a generated update, ask three questions:
-
-1. Is the status true?
-2. Are the risks and asks clear enough for someone to act on them?
-3. Did the tool preserve useful signal, or just make the noise look organized?
-
-A pretty report that avoids the hard question is still a bad report.
-
----
-
-## Dry Run and Prompt Review
-
-Both scripts support `--dry-run` and `--save-prompt`.
-
-```bash
-./canvas_generator_from_template.py weekly_program_status \
-  C0TEAMCHANNEL F0PLANNINGCANVAS \
-  --dry-run \
-  --save-prompt prompt_review.md
-```
-
-Use this when changing the prompt, onboarding someone else, or checking what the tool is about to ask Claude to do.
-
----
-
-## Notes on Sensitive Data
-
-Slack channels and canvases often contain internal program details, names, links, and security context. Do not commit generated drafts or extracted templates unless you have scrubbed them first.
-
-The default `.gitignore` keeps local template JSON files and generated drafts out of the repo. That is intentional.
+*Part of the [tpm-toolbox](https://github.com/ChefPlex/tpm-toolbox). Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)*
