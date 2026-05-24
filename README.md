@@ -1,4 +1,4 @@
-[# tpm-toolbox
+# tpm-toolbox
 
 Practical tools for Technical Program Managers - templates, trackers, scripts, and AI-assisted workflows built from real program work.
 
