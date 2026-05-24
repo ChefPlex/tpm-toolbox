@@ -1,0 +1,34 @@
+# Generated files
+*_draft.txt
+*.txt
+
+# Template directory (commit the directory but not individual templates)
+# Remove this line if you want to commit your templates
+.canvas_templates/*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Temp files
+/tmp/
+*.tmp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Secrets
+.env
+credentials.json
