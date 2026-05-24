@@ -1,4 +1,4 @@
-# tpm-toolbox
+[# tpm-toolbox
 
 Practical tools for Technical Program Managers - templates, trackers, scripts, and AI-assisted workflows built from real program work.
 
@@ -78,3 +78,4 @@ Everything here is deliberately lightweight. If setup is harder than the work th
 ---
 
 Built from experience running platform security, infrastructure, and compliance programs at enterprise scale. Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)
+](https://github.com/ChefPlex/tpm-toolbox)
