@@ -1,34 +1,56 @@
-# Generated files
+# Generated status drafts
+*_draft.md
 *_draft.txt
-*.txt
+*.draft.md
+*.draft.txt
+drafts/
+generated/
+outputs/
 
-# Template directory (commit the directory but not individual templates)
-# Remove this line if you want to commit your templates
+# Prompt/debug artifacts
+prompt_review.md
+*_prompt.md
+*.tmp
+*.log
+
+# Local Canvas template exports
+# Keep the folder docs tracked, but do not commit exported local templates.
 .canvas_templates/*.json
+!.canvas_templates/README.md
+!.canvas_templates/.gitkeep
 
-# Python
+# Local config and secrets
+.env
+.env.local
+credentials.json
+token.json
+slack_token.txt
+local_config.json
+
+# Python runtime/cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Temp files
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Temp directories
+tmp/
 /tmp/
-*.tmp
-*.log
 
-# OS
+# OS/editor noise
 .DS_Store
 Thumbs.db
-
-# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# Secrets
-.env
-credentials.json
