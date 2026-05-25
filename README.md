@@ -20,7 +20,41 @@ Everything here is ready to use or adapt. Nothing requires a specific toolchain 
 
 | Tool | What It Is |
 |------|-----------|
-| [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) | Two-script workflow that reads a Slack canvas to extract a reusable status template, then uses that template to generate a draft status report from your Slack channels and canvases. Claude does the reading and drafting; the wrapper handles local files. Draft output only - review before posting. |
+| [Slack Crawler](slack-crawler/) | Claude Code skill that reads all channels in a named Slack sidebar section and produces a structured 2-week intelligence brief - with hot callouts for the last 24 hours and 3 days at the top. Runs on demand. Optionally writes the brief to a Slack canvas. |
+| [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) | Two-script workflow that reads a Slack canvas to extract a reusable status template, then uses that template to generate a draft status report from your Slack channels and canvases. Draft output only - review before posting. |
+
+---
+
+## The Two-Step Status Workflow
+
+The two Slack tools are designed to work together. Run them in sequence to go from raw channel noise to a polished draft status report.
+
+**Step 1 - Run Slack Crawler once or twice a week**
+
+```
+/slack-crawler <section-name> --canvas new       â† first run, creates the canvas
+/slack-crawler <section-name> --canvas F0XXXXXXX â† subsequent runs, updates in place
+```
+
+The crawler reads all channels in a named sidebar section and produces a structured brief covering the last 14 days. It writes the brief to a canvas and keeps updating that same canvas each time you run it. By the time you need to write a status report, you have a current, organized picture of what happened across all your channels - not your memory of it.
+
+**Step 2 - Run Slack Canvas Status Synthesis to draft the report**
+
+```
+./canvas_generator_from_template.py <template> <channel-ids> <canvas-ids>
+```
+
+The synthesis tool reads your program channels and the canvas the crawler just updated, applies a template extracted from one of your existing status canvases, and produces a draft in your usual format. It is not going to be perfect. It will get you most of the way there - the structure, the populated sections, the signal pulled from Slack - and leave you with editing rather than writing from scratch.
+
+**Why this works:** The crawler does the ongoing intelligence work throughout the week. The synthesis tool does the assembly work when you need to report. Keeping them separate means you can run the crawler on whatever cadence makes sense for your program without it being tied to your reporting schedule.
+
+---
+
+## How This Fits Together
+
+These tools are designed to work alongside the templates in [tpm-templates](https://github.com/ChefPlex/tpm-templates). The RAID log here is the working file - the [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) explains how to run it. The status synthesis tool produces drafts in whatever format your existing status canvas already uses, which means it works with the reporting structure in [program-reporting-frameworks](https://github.com/ChefPlex/program-reporting-frameworks).
+
+They are separate repos because templates and tools serve different purposes - but they are designed to be used together.
 
 ---
 
@@ -28,14 +62,6 @@ Everything here is ready to use or adapt. Nothing requires a specific toolchain 
 
 - Program status report template
 - Program health dashboard
-
----
-
-## How This Fits Together
-
-The tools here are designed to work alongside the templates in [tpm-templates](https://github.com/ChefPlex/tpm-templates). The RAID log here is the working file - the [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) explains how to run it. The status report template here feeds the communications cadence defined in the [Communications Plan template](https://github.com/ChefPlex/tpm-templates/blob/main/communications-plan-template.md). The canvas synthesis tool produces drafts in whatever format your existing status canvas already uses.
-
-They are separate repos because templates and tools serve different purposes - but they are designed to be used together.
 
 ---
 
