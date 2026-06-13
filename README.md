@@ -124,4 +124,5 @@ The bar:
 
 These tools exist because the mechanical parts of program management - gathering signal, drafting reports, tracking status - are solvable. The judgment parts are not. The goal is to spend less time on the former so you have more for the latter.
 
+
 Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)
