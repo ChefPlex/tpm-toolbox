@@ -1,4 +1,4 @@
-# Slack Sections — Channel Registry
+# Slack Sections - Channel Registry
 
 This file maps your Slack sidebar sections to channel IDs for use with `/slack-crawler`.
 It is the authoritative source when running the skill or building canvas cron scripts.
@@ -8,7 +8,7 @@ It is the authoritative source when running the skill or building canvas cron sc
 - Use `slack_read_channel` (not `slack_search_public`) with `limit=50` and `response_format=concise`
 - Batch reads to avoid rate limits (2-3 channels per batch)
 - Private channels (🔒) are accessible via API if you are a member
-- Shared/external channels (🔗) are NOT indexed by the Slack API — IDs unresolvable via search
+- Shared/external channels (🔗) are NOT indexed by the Slack API - IDs unresolvable via search
 
 DMs and group DMs are excluded from this registry. They are not channels.
 
@@ -20,7 +20,7 @@ DMs and group DMs are excluded from this registry. They are not channels.
 
 ## Section: `_SectionA`
 
-What this section covers — a program, team, or workstream.
+What this section covers - a program, team, or workstream.
 All channels in this section are already monitored by `section_a_cron.sh`.
 
 | Channel | ID | Type | Notes |
@@ -29,13 +29,13 @@ All channels in this section are already monitored by `section_a_cron.sh`.
 | #slack-channel-2 | C0000000002 | 🔒 Private | Working group channel. Also in `section_a_cron.sh`. |
 | #slack-channel-3 | C0000000003 | 🌐 Public | Escalation/support channel. Also in `section_a_cron.sh`. |
 
-**Total channels:** 3 (3 resolved) — fully covered by `section_a_cron.sh` → canvas `F0000000001`
+**Total channels:** 3 (3 resolved) - fully covered by `section_a_cron.sh` → canvas `F0000000001`
 
 ---
 
 ## Section: `SectionB`
 
-What this section covers — tools, learning, or announcements.
+What this section covers - tools, learning, or announcements.
 
 | Channel | ID | Type | Notes |
 |---|---|---|---|
@@ -50,16 +50,16 @@ What this section covers — tools, learning, or announcements.
 
 ## Section: `_SectionC`
 
-What this section covers — operations, release planning, or governance.
+What this section covers - operations, release planning, or governance.
 
 | Channel | ID | Type | Notes |
 |---|---|---|---|
 | #slack-channel-8  | C0000000008 | 🔒 Private | Release planning coordination. |
 | #slack-channel-9  | C0000000009 | 🌐 Public | Status updates. |
 | #slack-channel-10 | C0000000010 | 🌐 Public | Help/support channel with office hours. |
-| #slack-channel-11 | ⚠️ UNKNOWN  | 🔗 Shared/External | External badge — shared vendor channel. Not indexed by Slack API. |
+| #slack-channel-11 | ⚠️ UNKNOWN | 🔗 Shared/External | External badge - shared vendor channel. Not indexed by Slack API. |
 
-**Total channels:** 4 (3 resolved, 1 unresolved — `#slack-channel-11` is a shared/external channel)
+**Total channels:** 4 (3 resolved, 1 unresolved - `#slack-channel-11` is a shared/external channel)
 
 ---
 
@@ -86,5 +86,5 @@ Claude will resolve all channel IDs via `slack_search_channels` and append the t
 DMs and group DMs are always excluded.
 
 **Notes on unresolvable channels:**
-- 🔗 **Shared/External** channels — cross-workspace shared channels. The Slack API cannot find them by name. Retrieve the ID manually: open the channel → click the channel name → "Copy link" → the ID is the `CXXXXXXXXX` portion of the URL.
+- 🔗 **Shared/External** channels - cross-workspace shared channels. The Slack API cannot find them by name. Retrieve the ID manually: open the channel → click the channel name → "Copy link" → the ID is the `CXXXXXXXXX` portion of the URL.
 - Bold channel names in the sidebar mean unread messages, not a different channel type.

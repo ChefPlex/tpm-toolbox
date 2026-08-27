@@ -1,4 +1,4 @@
-# Setup Guide — `/slack-crawler`
+# Setup Guide - `/slack-crawler`
 
 Two files. No code to compile, no dependencies beyond Claude Code and the Slack MCP plugin.
 

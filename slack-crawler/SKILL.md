@@ -127,8 +127,8 @@ Classify by timestamp:
 **Links:** Always include URLs for tickets, canvas IDs, PRs, and any referenced artifacts
 
 **HOT format:**
-- Lead with substance: "[RISK] Cold-start fix plan published — deploy PR #911 (Jane Smith, 11:12 AM)"
-- Not: "Jane Smith @ 11:12 AM — Published fix plan..."
+- Lead with substance: "[RISK] Cold-start fix plan published - deploy PR #911 (Jane Smith, 11:12 AM)"
+- Not: "Jane Smith @ 11:12 AM - Published fix plan..."
 
 **Quality:**
 - Bullets over paragraphs, scannable, no filler
