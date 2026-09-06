@@ -4,7 +4,12 @@ Practical tools for Technical Program Managers: templates, trackers, and scripts
 
 The goal is to spend less time on the mechanical parts of program management and more time on the judgment parts.
 
-Everything here is ready to use or adapt. Nothing requires a specific corporate system. If it needs a dependency, it is documented.
+**This repo is the things that run.** The documents they produce - charters, RAID guides, RACI
+matrices, close-out reports - are in [tpm-templates](https://github.com/ChefPlex/tpm-templates).
+
+The trackers and templates below need nothing but a spreadsheet or a text editor. **The two Slack
+tools are different**: both require Claude Code and a working Slack MCP connection, which most
+people will not have set up. Better to say that here than three clicks in.
 
 ---
 
@@ -36,7 +41,6 @@ Everything here is ready to use or adapt. Nothing requires a specific corporate 
 | RAID Log Template | Ready | Solid base tracker. Pair it with the RAID Log Guide in `tpm-templates`. |
 | Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. |
 | Slack Canvas Status Synthesis | Working | Strong draft-generation workflow. Requires review before publishing. |
-| Program Health Dashboard | Planned | Not yet available. |
 
 ---
 
