@@ -19,7 +19,8 @@ people will not have set up. Better to say that here than three clicks in.
 
 | Tool | What It Is |
 |---|---|
-| [RAID Log Template](raid-log-template.xlsx) | A clean, ready-to-use Excel RAID log with tabs for Risks, Assumptions, Issues, and Dependencies. Color-coded, auto-calculating, zero setup required. Pair it with the [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) in `tpm-templates` for how to run it effectively. |
+| [RAID Log Template - Excel](raid-log-template.xlsx) | A clean, ready-to-use Excel RAID log with tabs for Risks, Assumptions, Issues, and Dependencies. Color-coded, auto-calculating, zero setup required. The better choice for actually running a busy program. |
+| [RAID Log Template - Markdown](raid-log-template.md) | The same log in a format you can read before downloading anything, paste into Confluence or Notion, diff in a pull request, or open on a phone. Same fields, with a worked example in every section. |
 | [Program Kickoff Checklist](program-kickoff-checklist.md) | Pre-kickoff checklist, recommended agenda with timing, section-by-section facilitation guide, and post-kickoff follow-up checklist. |
 | [Meeting Notes + Action Item Tracker](meeting-notes-action-tracker.md) | Template for capturing decisions, actions, open questions, and risks in a meeting. Includes a running tracker for recurring meetings. |
 
@@ -38,7 +39,7 @@ people will not have set up. Better to say that here than three clicks in.
 |---|---|---|
 | Program Kickoff Checklist | Ready | Good for getting scope, stakeholders, risks, dependencies, and operating rhythm aligned before kickoff. |
 | Meeting Notes + Action Item Tracker | Ready | Useful for recurring execution hygiene and follow-through. |
-| RAID Log Template | Ready | Solid base tracker. Pair it with the RAID Log Guide in `tpm-templates`. |
+| RAID Log Template (Excel and Markdown) | Ready | Solid base tracker, same fields either way. Pair it with the RAID Log Guide in `tpm-templates`. |
 | Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. |
 | Slack Canvas Status Synthesis | Working | Strong draft-generation workflow. Requires review before publishing. |
 
