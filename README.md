@@ -53,7 +53,7 @@ The two Slack tools are designed to work together. Run them in sequence to go fr
 
 The crawler reads all channels in a named sidebar section and produces a structured brief covering the last 14 days. It writes the brief to a canvas and keeps updating that same canvas each time you run it.
 
-By the time you need to write a status report, you have a current, organized picture of what happened across all your channels, not your memory of it.
+By the time you need to write a status report, you've a current, organized picture of what happened across all your channels, not your memory of it.
 
 ### Step 2: Run Slack Canvas Status Synthesis to draft the report
 
@@ -73,9 +73,9 @@ The crawler does the ongoing intelligence work throughout the week. The synthesi
 
 ## Where This Breaks
 
-These tools break when they are treated as the source of truth.
+These tools break when they're treated as the source of truth.
 
-A crawler can collect signal. It cannot know whether a Slack message is confirmed, political, stale, or already superseded.
+A crawler can collect signal. It can't know whether a Slack message is confirmed, political, stale, or already superseded.
 
 A status synthesis tool can draft. It cannot decide whether the program is Green, Yellow, or Red. It cannot own the risk call. It cannot make the escalation decision.
 
@@ -87,8 +87,8 @@ Use the tools to reduce mechanical work. Do not use them to avoid judgment.
 
 Before using any automation with real program data:
 
-- Confirm the tool is approved for the data you are using.
-- Do not paste secrets, credentials, private keys, customer-sensitive data, restricted incident details, unreleased roadmap commitments, or regulated personal data into unapproved tools.
+- Confirm the tool is approved for the data you're using.
+- Don't paste secrets, credentials, private keys, customer-sensitive data, restricted incident details, unreleased roadmap commitments, or regulated personal data into unapproved tools.
 - Sanitize inputs when possible.
 - Review all generated drafts before sharing.
 - Keep the system of record updated after the draft is finalized.
@@ -105,13 +105,13 @@ The RAID log here is the working file. The [RAID Log Guide](https://github.com/C
 
 The status synthesis tool produces drafts in whatever format your existing status canvas already uses, which means it works with the reporting structure in [program-reporting-frameworks](https://github.com/ChefPlex/program-reporting-frameworks).
 
-They are separate repos because templates and tools serve different purposes, but they are designed to be used together.
+They're separate repos because templates and tools serve different purposes, but they're designed to be used together.
 
 ---
 
 ## Contributing
 
-If you have a tool, script, or template that saves TPMs real time, open a PR or file an issue describing it.
+If you've a tool, script, or template that saves TPMs real time, open a PR or file an issue describing it.
 
 The bar:
 
@@ -122,7 +122,7 @@ The bar:
 
 ---
 
-These tools exist because the mechanical parts of program management - gathering signal, drafting reports, tracking status - are solvable. The judgment parts are not. The goal is to spend less time on the former so you have more for the latter.
+These tools exist because the mechanical parts of program management - gathering signal, drafting reports, tracking status - are solvable. The judgment parts are not. The goal is to spend less time on the former so you've more for the latter.
 
 
 Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)

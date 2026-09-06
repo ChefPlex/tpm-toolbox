@@ -2,7 +2,7 @@
 
 These examples show the intended use pattern: extract a format from a status canvas that already works, generate a draft from current Slack sources, then review before posting.
 
-The IDs below are placeholders. Do not commit real channel IDs, canvas IDs, customer names, ticket links, or internal program details.
+The IDs below are placeholders. Don't commit real channel IDs, canvas IDs, customer names, ticket links, or internal program details.
 
 ---
 
@@ -51,7 +51,7 @@ The output should save time. It should not get a free pass.
 
 ### Scenario
 
-You are tracking a security remediation effort across multiple service teams. The useful weekly update is not a transcript of every Slack message. It is a clean rollup of:
+You are tracking a security remediation effort across multiple service teams. The useful weekly update isn't a transcript of every Slack message. It is a clean rollup of:
 
 - Services completed
 - Services still in progress
@@ -78,7 +78,7 @@ You are tracking a security remediation effort across multiple service teams. Th
 
 ### What to watch
 
-This is the kind of report where polish can be dangerous. If the source channels do not include exception approvals, risk acceptances, or current service counts, the draft may look complete while still being wrong.
+This is the kind of report where polish can be dangerous. If the source channels don't include exception approvals, risk acceptances, or current service counts, the draft may look complete while still being wrong.
 
 That is not an AI problem. That is a source-of-truth problem. The tool just makes it easier to see.
 
@@ -115,7 +115,7 @@ A monthly executive brief needs a cleaner structure than a team status update:
 
 ### Review rule
 
-For executive updates, remove anything that sounds smart but does not drive a decision. Leaders do not need a decorated activity log. They need the truth, the risk, and the ask.
+For executive updates, remove anything that sounds smart but doesn't drive a decision. Leaders do not need a decorated activity log. They need the truth, the risk, and the ask.
 
 ---
 
@@ -150,7 +150,7 @@ After an incident, you need to turn a busy incident channel into a structured fo
 
 ### Review rule
 
-Do not let the tool invent certainty. If root cause is not confirmed, the draft should say that plainly. An accurate open question is better than a confident wrong answer.
+Do not let the tool invent certainty. If root cause isn't confirmed, the draft should say that plainly. An accurate open question is better than a confident wrong answer.
 
 ---
 
@@ -189,7 +189,7 @@ Daily summaries should be short. If the draft turns into a newsletter, cut it ba
 
 ## Wrapper Script Pattern
 
-For repeat use, wrap the command so the inputs are not retyped every week.
+For repeat use, wrap the command so the inputs aren't retyped every week.
 
 ### `weekly_status.sh`
 

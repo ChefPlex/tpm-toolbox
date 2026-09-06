@@ -1,6 +1,6 @@
 # Program Kickoff Checklist
 
-A program kickoff is the moment a team officially starts working together toward a shared objective. Done well, it aligns everyone on scope, roles, plan, and working norms before anyone has written a line of code or sent a remediation ticket. Done poorly, it is a deck nobody remembers and a calendar invite that produces no shared understanding.
+A program kickoff is the moment a team officially starts working together toward a shared objective. The whole value is settling scope, roles and working norms before anyone writes a line of code or opens a remediation ticket, because each of those gets harder to renegotiate the longer the program runs. The failed version is a deck nobody remembers.
 
 This checklist covers what needs to be in place before the kickoff, what needs to happen in the kickoff, and what needs to happen right after. Use it every time. The programs where you skip steps are the ones that teach you why the steps exist.
 
@@ -25,7 +25,7 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 - [ ] Product / program owner named and confirmed
 - [ ] Engineering lead named and confirmed
 - [ ] Core team roster complete with roles and allocations
-- [ ] RACI drafted (does not need to be final, but needs to exist)
+- [ ] RACI drafted (doesn't need to be final, but needs to exist)
 - [ ] Any vendor or contractor engagements initiated
 
 ### Plan and Infrastructure
@@ -54,7 +54,7 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 
 ## Part 2: Kickoff Agenda
 
-A kickoff does not need to be long. 90 minutes is usually enough for most programs. Two hours for complex multi-team programs. More than two hours and you are probably covering things that belong in working sessions, not kickoffs.
+A kickoff does not need to be long. 90 minutes is usually enough for most programs. Two hours for complex multi-team programs. More than two hours and you're probably covering things that belong in working sessions, not kickoffs.
 
 **Recommended agenda:**
 
@@ -77,7 +77,7 @@ A kickoff does not need to be long. 90 minutes is usually enough for most progra
 
 ### Problem Statement and Strategic Alignment
 
-This is the most important part of the kickoff and the one most often glossed over. The team needs to understand not just what they are building but why it matters. Engineers who understand the business problem make better technical decisions than engineers who are handed a spec.
+This is the most important part of the kickoff and the one most often glossed over. The team needs to understand not just what they're building but why it matters. Engineers who understand the business problem make better technical decisions than engineers who are handed a spec.
 
 Cover:
 - The specific problem or risk being addressed
@@ -99,7 +99,7 @@ If there are open scope questions, name them. Do not leave them implicit.
 
 ### Roles and RACI
 
-Every person in the room should leave knowing what they are responsible for and who to go to for decisions. Do not read the RACI table out loud - review it at a high level, call out the decision-making structure, and confirm that everyone understands their role.
+Every person in the room should leave knowing what they're responsible for and who to go to for decisions. Don't read the RACI table out loud - review it at a high level, call out the decision-making structure, and confirm that everyone understands their role.
 
 Specifically cover:
 - Who is the single accountable owner for program success (usually the PO or exec sponsor)
@@ -110,7 +110,7 @@ Specifically cover:
 
 ### Plan, Milestones, and Dependencies
 
-Walk through the milestone plan at a high level. Do not present it as fixed - present it as the current best understanding, which will be refined as the team learns more.
+Walk through the milestone plan at a high level. Don't present it as fixed - present it as the current best understanding, which will be refined as the team learns more.
 
 Specifically cover:
 - The major milestones and target dates
@@ -127,13 +127,13 @@ This section prevents a lot of friction later. The team should agree on:
 - How decisions get documented (RAID log, decision log, meeting notes)
 - Communication channel and expectations (response time, what goes in Slack vs. email vs. the tracker)
 - How scope changes are handled (change control process)
-- How the team gives each other feedback when something is not working
+- How the team gives each other feedback when something isn't working
 
 These do not need to be elaborate. Five agreed principles are better than a ten-page team charter nobody reads.
 
 ### Risks and Open Questions
 
-Do not skip this. A kickoff that ends without surfacing any risks is a kickoff that did not create enough psychological safety for people to be honest.
+Do not skip this. A kickoff that ends without surfacing any risks is a kickoff that didn't create enough psychological safety for people to be honest.
 
 Run a quick risk brainstorm - five to ten minutes, everyone contributes. Log everything in the RAID log. Assign owners to the top three. The rest get monitored.
 
@@ -161,7 +161,7 @@ Most of the same principles apply, with a few additions:
 
 **Breakout rooms for working norms.** Small group discussion is more productive than plenary for working norms. Put people in groups of 4-5 for 10 minutes, then bring back the top three agreements from each group.
 
-**Interactive elements.** A kickoff where everyone stares at a deck for 90 minutes does not build alignment. Use polls, shared docs, or a virtual whiteboard for the risk brainstorm.
+**Interactive elements.** A kickoff where everyone stares at a deck for 90 minutes doesn't build alignment. Use polls, shared docs, or a virtual whiteboard for the risk brainstorm.
 
 **Shorter sessions.** Remote attention spans are shorter. If the kickoff needs to be more than 90 minutes, split it into two sessions with a break in between.
 

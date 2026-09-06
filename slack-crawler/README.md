@@ -22,11 +22,11 @@ Output goes directly into your Claude Code conversation. You can optionally ask 
 
 ## Why This Exists: The Slack Sections Problem
 
-**Slack sections are invisible to the Slack API.** There is no endpoint that lists your sidebar sections or the channels in them. Sections are a purely client-side UI feature - they exist only inside your Slack app. This means you cannot query "what channels are in my _Domain section?" without first building a registry.
+**Slack sections are invisible to the Slack API.** There's no endpoint that lists your sidebar sections or the channels in them. Sections are a purely client-side UI feature - they exist only inside your Slack app. This means you can't query "what channels are in my _Domain section?" without first building a registry.
 
 The solution is a one-time bootstrap: take screenshots of your Slack sidebar sections, share them with Claude, and Claude resolves all the channel IDs via the Slack API. The result is saved to `slack_sections.md` - a registry file the skill reads at runtime. Once it exists, the skill works entirely via API. The registry only needs updating when your sidebar changes.
 
-Two weeks is the default window because it is long enough to catch decisions and threads that moved slowly, short enough that the output stays actionable rather than encyclopedic.
+Two weeks is the default window because it's long enough to catch decisions and threads that moved slowly, short enough that the output stays actionable rather than encyclopedic.
 
 ---
 
@@ -46,7 +46,7 @@ slack-crawler/
 
 **`SKILL.md` is the same for everyone.** Install it as-is. No edits required.
 
-**`slack_sections.md` must be built fresh for every person.** The file in this repo is a sanitized template with placeholder channel names and IDs. It will not work as-is because your Slack sidebar sections have different names, different channels, and your private channel memberships are your own.
+**`slack_sections.md` must be built fresh for every person.** The file in this repo is a sanitized template with placeholder channel names and IDs. It won't work as-is because your Slack sidebar sections have different names, different channels, and your private channel memberships are your own.
 
 ---
 
@@ -75,7 +75,7 @@ For each Slack sidebar section you want to cover:
    ```
    Add the `_SectionName` section to slack_sections.md
    ```
-4. Claude reads the channel names, resolves each ID via `slack_search_channels`, flags anything it cannot resolve, skips DMs, and appends the completed table to `~/.claude/skills/slack-crawler/slack_sections.md`.
+4. Claude reads the channel names, resolves each ID via `slack_search_channels`, flags anything it can't resolve, skips DMs, and appends the completed table to `~/.claude/skills/slack-crawler/slack_sections.md`.
 5. Repeat for each section you want to cover.
 
 **On shared/external channels:** Channels with an "External" badge are cross-workspace shared channels. The Slack API cannot find them by name. If you need to include one, get the ID manually: open the channel, click the channel name, "Copy link" - the ID is the `CXXXXXXXXX` part of the URL.

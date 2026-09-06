@@ -10,9 +10,9 @@ Claude does the reading and drafting. The Python wrappers handle local files. Th
 
 ## Why This Exists
 
-The hard part of status reporting is not the writing. It is pulling a useful signal from a week of Slack noise, tracking down the current state of five concurrent workstreams, and then organizing it into a format that the right people will actually read.
+The hard part of status reporting is not the writing. It's pulling a useful signal from a week of Slack noise, tracking down the current state of five concurrent workstreams, and then organizing it into a format that the right people will actually read.
 
-This tool does the first-pass assembly. It reads your sources, applies your template, and produces a draft that is correct enough to edit rather than blank enough to dread. The draft is not the source of truth. Your review is.
+This tool does the first-pass assembly. It reads your sources, applies your template, and produces a draft that's correct enough to edit rather than blank enough to dread. The draft is not the source of truth. Your review is.
 
 ---
 
@@ -111,7 +111,7 @@ By default, the extractor allows only `slack_read_canvas` and the generator allo
 
 ## Weekly Wrapper Pattern
 
-For repeat use, wrap the command so the inputs are not retyped every week:
+For repeat use, wrap the command so the inputs aren't retyped every week:
 
 ```bash
 #!/usr/bin/env bash
@@ -137,7 +137,7 @@ echo "Review before posting. The tool writes drafts, not truth."
 
 ## What Comes Out
 
-A markdown draft matching the structure of your source template. Required sections are always present. Optional sections appear only when there is source material to support them. If a required fact is missing or conflicting, the draft includes a `Needs Review` section naming the gap rather than filling it with something plausible.
+A markdown draft matching the structure of your source template. Required sections are always present. Optional sections appear only when there's source material to support them. If a required fact is missing or conflicting, the draft includes a `Needs Review` section naming the gap rather than filling it with something plausible.
 
 Before you send it, check:
 

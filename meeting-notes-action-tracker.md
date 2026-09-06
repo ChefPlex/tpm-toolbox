@@ -2,7 +2,7 @@
 
 A meeting that produces no written record is a meeting that happened in parallel in everyone's head - which means the decisions made, the actions assigned, and the context discussed will diverge the moment the call ends. This template fixes that.
 
-The goal is not comprehensive documentation. It is capturing the three things that actually matter: decisions made, actions assigned, and open questions that need to be resolved. Everything else is optional.
+The goal is not comprehensive documentation. It's capturing the three things that actually matter: decisions made, actions assigned, and open questions that need to be resolved. Everything else is optional.
 
 Fill this in during the meeting, not after. Circulate it within 24 hours. Put the action items in your tracker before you close the document.
 
@@ -44,7 +44,7 @@ The most important section. Every decision should have a clear statement of what
 
 ## Action Items
 
-Every action item needs three things: a specific task, a named owner (one person, not a team), and a due date. An action item without any of these three is not an action item - it is a suggestion.
+Every action item needs three things: a specific task, a named owner (one person, not a team), and a due date. An action item without any of these three isn't an action item - it's a suggestion.
 
 | # | Action Item | Owner | Due Date | Status | Notes |
 |---|------------|-------|---------|--------|-------|
@@ -55,13 +55,13 @@ Every action item needs three things: a specific task, a named owner (one person
 
 **Status options:** Open / In Progress / Complete / Blocked / Cancelled
 
-**At the close of every meeting:** Read the action items back out loud. Confirm the owner, the due date, and that the task is specific enough to be completable. If someone is not sure what "own" means for their action item, it is not specific enough.
+**At the close of every meeting:** Read the action items back out loud. Confirm the owner, the due date, and that the task is specific enough to be completable. If someone isn't sure what "own" means for their action item, it's not specific enough.
 
 ---
 
 ## Key Discussion Points
 
-A brief summary of the most important discussion topics - enough context for someone who was not in the meeting to understand what was covered. Not a transcript. Three to eight bullet points for most meetings.
+A brief summary of the most important discussion topics - enough context for someone who wasn't in the meeting to understand what was covered. Not a transcript. Three to eight bullet points for most meetings.
 
 - [Discussion point 1]
 - [Discussion point 2]
@@ -104,7 +104,7 @@ Any risks or issues that came up in the discussion that need to be logged in the
 
 ## Distribution
 
-Circulate these notes to: [attendees + relevant stakeholders who were not present]
+Circulate these notes to: [attendees + relevant stakeholders who weren't present]
 
 ---
 
@@ -116,7 +116,7 @@ For recurring meetings, maintain a running list of all open action items below. 
 |---|------------|-------|---------|--------|------------|-------|
 | | | | | | | |
 
-**Review cadence:** At the start of every meeting, run through open action items from the last session before covering new business. Items that are consistently Open and overdue need a conversation about whether they are real commitments or aspirations.
+**Review cadence:** At the start of every meeting, run through open action items from the last session before covering new business. Items that are consistently Open and overdue need a conversation about whether they're real commitments or aspirations.
 
 ---
 
@@ -130,9 +130,9 @@ For recurring meetings, maintain a running list of all open action items below. 
 
 **Do not record everything.** A verbatim transcript is not meeting notes. Capture the signal - decisions, actions, open questions, key context. Leave out the back-and-forth that led there.
 
-**Circulate within 24 hours.** Notes that circulate a week later are not useful. Same-day is ideal. Next day is acceptable. After that, the value degrades fast.
+**Circulate within 24 hours.** Notes that circulate a week later aren't useful. Same-day is ideal. Next day is acceptable. After that, the value degrades fast.
 
-**Follow up on action items.** The notes are only as useful as the follow-through. If action items are not tracked and reviewed at the next meeting, the meeting notes become a historical record rather than an operational tool.
+**Follow up on action items.** The notes are only as useful as the follow-through. If action items aren't tracked and reviewed at the next meeting, the meeting notes become a historical record rather than an operational tool.
 
 ---
 

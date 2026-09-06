@@ -34,7 +34,7 @@ Claude Code picks up skills from `~/.claude/skills/` automatically. No restart, 
 
 You cannot use someone else's `slack_sections.md` directly. It reflects their Slack sidebar - their sections, their channels, their private channel memberships. Your sidebar is different.
 
-This is not a limitation - it is the nature of Slack sections. They are a purely client-side UI feature. There is no Slack API endpoint that exposes them. The registry must be bootstrapped manually from screenshots of your own sidebar, then maintained as your sections change.
+This isn't a limitation - it's the nature of Slack sections. They are a purely client-side UI feature. There is no Slack API endpoint that exposes them. The registry must be bootstrapped manually from screenshots of your own sidebar, then maintained as your sections change.
 
 ### How to Bootstrap
 
@@ -49,7 +49,7 @@ For each Slack sidebar section you want to cover:
    Add the `_SectionName` section to slack_sections.md
    ```
 
-   Claude will read the channel names, call `slack_search_channels` for each one, flag anything it cannot resolve, skip DMs and group DMs, and append the completed section table to `~/.claude/skills/slack-crawler/slack_sections.md` - creating the file if it does not already exist.
+   Claude will read the channel names, call `slack_search_channels` for each one, flag anything it can't resolve, skip DMs and group DMs, and append the completed section table to `~/.claude/skills/slack-crawler/slack_sections.md` - creating the file if it doesn't already exist.
 
 4. Repeat for each section you want to cover.
 
