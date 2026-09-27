@@ -58,7 +58,7 @@ The two Slack tools are designed to work together. Run them in sequence to go fr
 
 The crawler reads all channels in a named sidebar section and produces a structured brief covering the last 14 days. It writes the brief to a canvas and keeps updating that same canvas each time you run it.
 
-By the time you need to write a status report, you've a current, organized picture of what happened across all your channels, not your memory of it.
+By the time you need to write a status report, you have a current, organized picture of what happened across all your channels, not your memory of it.
 
 ### Step 2: Run Slack Canvas Status Synthesis to draft the report
 
@@ -116,7 +116,7 @@ They're separate repos because templates and tools serve different purposes, but
 
 ## Contributing
 
-If you've a tool, script, or template that saves TPMs real time, open a PR or file an issue describing it.
+If you have a tool, script, or template that saves TPMs real time, open a PR or file an issue describing it.
 
 The bar:
 
@@ -127,7 +127,7 @@ The bar:
 
 ---
 
-These tools exist because the mechanical parts of program management - gathering signal, drafting reports, tracking status - are solvable. The judgment parts are not. The goal is to spend less time on the former so you've more for the latter.
+These tools exist because the mechanical parts of program management - gathering signal, drafting reports, tracking status - are solvable. The judgment parts are not. The goal is to spend less time on the former so you have more for the latter.
 
 
 Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)
