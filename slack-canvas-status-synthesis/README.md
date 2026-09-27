@@ -102,10 +102,9 @@ Use `none` on either position if you only have channels or only have canvases:
 |----------|-------------|
 | `CLAUDE_BIN` | Path to Claude CLI if not on PATH |
 | `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist |
-| `CLAUDE_BYPASS_PERMISSIONS` | Set to `1` to enable bypass mode (off by default) |
 | `NO_CAFFEINATE` | Set to `1` to skip caffeinate on macOS |
 
-By default, the extractor allows only `slack_read_canvas` and the generator allows only `slack_read_channel,slack_read_canvas`. This is intentional. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
+By default, the extractor allows only `slack_read_canvas` and the generator allows only `slack_read_channel,slack_read_canvas`. This is intentional. There is no switch to bypass Claude's permission checks, on purpose: the read-tool allowlist is the whole safety model, and a bypass flag would remove it for every tool, including ones that post or write. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
 
 ---
 
@@ -139,8 +138,14 @@ echo "Review before posting. The tool writes drafts, not truth."
 
 A markdown draft matching the structure of your source template. Required sections are always present. Optional sections appear only when there's source material to support them. If a required fact is missing or conflicting, the draft includes a `Needs Review` section naming the gap rather than filling it with something plausible.
 
+Two things are always in the draft:
+
+- **A suggested status, marked "TPM decides".** The tool cannot decide Red / Yellow / Green. It proposes a color with a one-line rationale from the sources, and the TPM sets the real one.
+- **A `Source Coverage` table**, one row per channel and canvas: whether it was read, how many messages, what span they cover, and whether the read was truncated. Channel reads stop at 100 messages, so a busy channel can be only partly covered, and the table is how you find out.
+
 Before you send it, check:
 
+- Does the coverage table show every source you meant to include, with nothing truncated that matters?
 - Is the Green / Yellow / Red status defensible?
 - Are the dates and owners current?
 - Are blockers written as decision points, not vague concerns?

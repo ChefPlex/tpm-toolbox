@@ -45,7 +45,7 @@ def validate_template_name(template_name: str) -> None:
 
 
 def resolve_claude_bin() -> str:
-    candidates = [os.environ.get("CLAUDE_BIN"), shutil.which("claude"), str(Path.home() / ".aisuite" / "bin" / "claude")]
+    candidates = [os.environ.get("CLAUDE_BIN"), shutil.which("claude")]
     for candidate in candidates:
         if not candidate:
             continue
@@ -64,8 +64,6 @@ def build_claude_command(prompt: str) -> list[str]:
     allowed_tools = os.environ.get("CLAUDE_ALLOWED_TOOLS", DEFAULT_ALLOWED_TOOLS).strip()
     if allowed_tools and allowed_tools.lower() != "none":
         cmd.extend(["--allowedTools", allowed_tools])
-    if os.environ.get("CLAUDE_BYPASS_PERMISSIONS") == "1":
-        cmd.extend(["--permission-mode", "bypassPermissions"])
     cmd.extend(["-p", prompt])
     return cmd
 

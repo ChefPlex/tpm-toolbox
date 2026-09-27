@@ -22,7 +22,7 @@ Optionally writes the brief to a Slack canvas.
 **Examples:**
 - `/slack-crawler _Domain` → conversation output
 - `/slack-crawler STPM --canvas new` → create canvas
-- `/slack-crawler Engineering --canvas F0B1QKG7NQN` → update canvas
+- `/slack-crawler Engineering --canvas F0XXXXXXXXX` → update canvas
 - `/slack-crawler` → list available sections
 
 Section names are case-insensitive and ignore leading underscores.
@@ -57,6 +57,8 @@ For each readable channel, call `slack_read_channel` with `limit: 100`, `respons
 - `cutoff_1d` = today minus 1 day
 
 Use `oldest: cutoff_14d`. Batch reads in groups of 3.
+
+**Per-channel limit: 100 messages.** This is one read per channel, with no pagination. A channel with more than 100 messages in the window is truncated: the rest of the window is not read. For each channel, record messages read, the oldest and newest timestamps actually returned, and whether the read hit the limit (100 returned = treat as truncated). This feeds the coverage line in the brief. Never present a truncated channel as a full 14-day summary.
 
 ---
 
@@ -97,6 +99,7 @@ Classify by timestamp:
 
 ### [#channel-name](https://your-workspace.slack.com/archives/CXXXXXXXXX)
 **[N messages in 14 days]**
+Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Truncated: [yes / no]
 
 [3-7 bullets: themes, decisions, recurring issues, key people]
 
@@ -108,6 +111,8 @@ Classify by timestamp:
 ---
 
 ## Coverage Notes
+- READ: [N] of [N total] channels, [N] truncated at the 100-message limit
+- TRUNCATED: [#channel-name](URL) - 100 messages read, covers [oldest read] onward, earlier messages in the window not read
 - SKIP: #channel-name — Shared/external, skipped
 - SKIP: [#channel-name](URL) — Not accessible
 - INFO: [#channel-name](URL) — Covered by script-name.sh

@@ -129,6 +129,7 @@ The skill searches these paths in order and uses the first file it finds:
 
 ### #channel-name
 **[N messages in 14 days]**
+Coverage: read N messages, [oldest read] to [newest read], window 14 days | Truncated: yes / no
 - Dominant theme or decision
 - Recurring issue or open risk
 
@@ -136,10 +137,14 @@ The skill searches these paths in order and uses the first file it finds:
 - Pattern or risk that spans multiple channels
 
 ## Coverage Notes
+- Read N of N channels, N truncated at the 100-message limit
+- #channel-name - Truncated: 100 messages read, earlier messages in the window not read
 - #channel-name - Shared/external channel, skipped
 - #channel-name - Not accessible
 - #channel-name - Already covered by my_cron.sh
 ```
+
+**The message limit.** The skill reads at most **100 messages per channel** in a single read, with no pagination. A busy channel with more than 100 messages in the 14-day window is truncated, and the unread part of the window is simply not in the summary. The coverage line on each channel says how many messages were read, what span they cover, and whether the limit was hit, so a truncated channel is never mistaken for a quiet one. Use a deep dive (below) for any channel that shows as truncated.
 
 ---
 
@@ -180,7 +185,7 @@ The skill searches these paths in order and uses the first file it finds:
 
 ## Origin
 
-This tool grew out of earlier work in [SlackSummarization](https://github.com/ChefPlex/SlackSummarization), which was built for a specific internal program environment. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
+This tool grew out of earlier work in a private original, built for a specific internal program environment. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
 
 ---
 

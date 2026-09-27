@@ -54,7 +54,7 @@ def parse_id_list(raw_value: str) -> list[str]:
 
 
 def resolve_claude_bin() -> str:
-    candidates = [os.environ.get("CLAUDE_BIN"), shutil.which("claude"), str(Path.home() / ".aisuite" / "bin" / "claude")]
+    candidates = [os.environ.get("CLAUDE_BIN"), shutil.which("claude")]
     for candidate in candidates:
         if not candidate:
             continue
@@ -73,8 +73,6 @@ def build_claude_command(prompt: str) -> list[str]:
     allowed_tools = os.environ.get("CLAUDE_ALLOWED_TOOLS", DEFAULT_ALLOWED_TOOLS).strip()
     if allowed_tools and allowed_tools.lower() != "none":
         cmd.extend(["--allowedTools", allowed_tools])
-    if os.environ.get("CLAUDE_BYPASS_PERMISSIONS") == "1":
-        cmd.extend(["--permission-mode", "bypassPermissions"])
     cmd.extend(["-p", prompt])
     return cmd
 
@@ -151,7 +149,7 @@ def generate_content_prompt(template: dict[str, Any], channel_ids: list[str], ca
     channel_block = format_id_block(
         "Slack channels",
         channel_ids,
-        f"Read the last {lookback_days} days using `slack_read_channel` with `limit=100`, `response_format=concise`, and `oldest={lookback_ts}` if the tool supports those arguments.",
+        f"Read the last {lookback_days} days using `slack_read_channel` with `limit=100`, `response_format=concise`, and `oldest={lookback_ts}` if the tool supports those arguments. If a read returns 100 messages, treat that channel as truncated: earlier messages in the window were not read.",
     )
     canvas_block = format_id_block("Slack canvases", canvas_ids, "Read current content using `slack_read_canvas`.")
     stakeholder_block = "\n".join(f"- {item}" for item in stakeholders) if stakeholders else "No stakeholder list found in the template. Use only stakeholders found in source material."
@@ -195,7 +193,7 @@ Rules for facts:
 - Do not convert vague chatter into a confident claim.
 - If a required fact is missing, say it is not found in the source material.
 - If source material conflicts, call out the conflict instead of resolving it silently.
-- Red / Yellow / Green status must be supported by the source material.
+- Red / Yellow / Green status is a suggestion, not a decision. Mark it as `Suggested status (TPM decides): <color>` with a one-line rationale drawn from the source material. The TPM sets the actual status.
 
 ================================================================================
 STEP 3: APPLY TEMPLATE STRUCTURE
@@ -233,6 +231,12 @@ The draft should:
 - Preserve ticket IDs, links, dates, and metrics exactly as found.
 - Make risks and decisions easy to see.
 - Include a short `Needs Review` section only if facts are missing, conflicting, or require human confirmation.
+- End with a `Source Coverage` table, always, with one row per channel and canvas listed in Step 1:
+
+| Source | Type | Read? | Messages read | Span covered | Truncated? |
+|---|---|---|---|---|---|
+
+  Use `not read` and the reason for any source you could not access. A source missing from this table is a source the reader will assume was covered.
 
 Do not:
 
