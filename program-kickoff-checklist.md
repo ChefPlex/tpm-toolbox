@@ -56,7 +56,9 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 
 A kickoff does not need to be long. 90 minutes is usually enough for most programs. Two hours for complex multi-team programs. More than two hours and you're probably covering things that belong in working sessions, not kickoffs.
 
-**Recommended agenda:**
+**Recommended agenda (two-hour version, for complex multi-team programs):**
+
+For the usual 90-minute kickoff, keep the same order and shorten each block by about a quarter. For a remote kickoff that runs past 90 minutes, split it into two sessions (see below).
 
 | Time | Topic | Owner | Notes |
 |------|-------|-------|-------|

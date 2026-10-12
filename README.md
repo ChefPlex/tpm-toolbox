@@ -63,10 +63,10 @@ By the time you need to write a status report, you have a current, organized pic
 ### Step 2: Run Slack Canvas Status Synthesis to draft the report
 
 ```text
-./canvas_generator_from_template.py
+./canvas_generator_from_template.py <template_name> <channel_ids|none> <crawler_canvas_id>
 ```
 
-The synthesis tool reads your program channels and the canvas the crawler just updated, applies a template extracted from one of your existing status canvases, and produces a draft in your usual format.
+Pass the crawler's canvas ID as the third argument (comma-separate it with any other canvases). The synthesis tool then reads your program channels and the canvas the crawler just updated, applies a template extracted from one of your existing status canvases, and produces a draft in your usual format.
 
 It will not be perfect. It will get you most of the way there: the structure, the populated sections, the signal pulled from Slack, and the first draft of the report. You still own the final call.
 

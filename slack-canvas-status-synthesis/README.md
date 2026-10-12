@@ -19,7 +19,7 @@ This tool does the first-pass assembly. It reads your sources, applies your temp
 ## Prerequisites
 
 - Python 3.9 or later
-- [Claude CLI](https://docs.claude.ai/reference/claude-cli) installed and on your PATH (or set `CLAUDE_BIN`)
+- [Claude Code CLI](https://code.claude.com/docs/en/cli-reference) installed and on your PATH (or set `CLAUDE_BIN`)
 - Slack MCP connected to your Claude environment
 - Read access to the channels and canvases you want to use
 
@@ -107,7 +107,7 @@ Use `none` on either position if you only have channels or only have canvases:
 
 Claude Code names MCP tools `mcp__<server>__<tool>`, and a permission rule written with a bare tool name matches nothing. So the scripts build full names from `SLACK_MCP_SERVER`. By default, the extractor allows only `mcp__<server>__slack_read_canvas` and the generator allows only the channel and canvas read tools. If the server name is wrong, the reads are simply not approved and the draft comes back with nothing read: it fails closed.
 
-Read-only is enforced two ways. The allowlist pre-approves the read tools, and `--disallowedTools` denies Slack's send, schedule, draft, create, and update tools outright, so the scripts cannot write to Slack even if your own Claude Code settings would allow it. There is no switch to bypass Claude's permission checks, on purpose: a bypass flag would remove both for every tool. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
+Read-only is enforced two ways. The allowlist pre-approves the read tools, and `--disallowedTools` denies Slack's send, schedule, draft, create, and update tools outright, so the scripts cannot write to Slack even if your own Claude Code settings would allow it. Both depend on `SLACK_MCP_SERVER` naming your real Slack server: check it against `claude mcp list` before the first run, because a wrong name makes the deny list match nothing too. There is no switch to bypass Claude's permission checks, on purpose: a bypass flag would remove both for every tool. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
 
 ---
 

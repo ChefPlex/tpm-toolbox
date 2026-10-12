@@ -44,7 +44,7 @@ slack-crawler/
 
 ## What You Need to Personalize
 
-**`SKILL.md` is the same for everyone.** Install it as-is. No edits required.
+**`SKILL.md` is the same for everyone.** Install it as-is. No edits required. It takes your workspace URL from the Slack links the tools return, and falls back to plain `#channel-name` when it cannot.
 
 **`slack_sections.md` must be built fresh for every person.** The file in this repo is a sanitized template with placeholder channel names and IDs. It won't work as-is because your Slack sidebar sections have different names, different channels, and your private channel memberships are your own.
 
@@ -166,7 +166,7 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 **Build a cron script for a section** - After running a brief, say "build a cron for [section-name]". Claude generates a bash cron script and canvas update prompt.
 
-**Deep dive one channel** - Say "deep dive on #channel-name". Claude re-reads with a higher message limit and produces a thread-by-thread breakdown.
+**Deep dive one channel** - Say "deep dive on #channel-name". The Slack read tool returns at most 100 messages per call, so Claude pages back through the full window with the tool's `cursor` and produces a thread-by-thread breakdown.
 
 **Generate a status report from the canvas** - Use the [Slack Canvas Status Synthesis](../slack-canvas-status-synthesis/) tool in this repo. The crawler does the weekly intelligence work; the synthesis tool does the assembly when you need to report.
 

@@ -33,7 +33,7 @@ in one screen. Same fields, shape that suits the medium.
 
 **Category:** Technical / Schedule / Budget / Operational / External
 **Probability and Impact:** High / Medium / Low
-**Risk Rating:** probability x impact. 7 or above gets active mitigation and regular review
+**Risk Rating:** probability x impact, scoring Low 1, Medium 2, High 3 (so 1 to 9). 6 or above gets active mitigation and regular review
 **Proximity:** how soon it could land - This Sprint / This Quarter / Later
 **Strategy:** Avoid / Mitigate / Transfer / Accept
 **Status:** Open / In Progress / Mitigated / Closed
@@ -42,7 +42,7 @@ in one screen. Same fields, shape that suits the medium.
 
 | ID | Risk | Owner | Rating | Status |
 |---|---|---|---|---|
-| R1 | Service teams have not committed migration dates | A. Okafor | 8 | In Progress |
+| R1 | Service teams have not committed migration dates | A. Okafor | 6 | In Progress |
 | R2 | | | | |
 
 ### R1 - Service teams have not committed migration dates
@@ -54,7 +54,7 @@ in one screen. Same fields, shape that suits the medium.
 | Category | Schedule |
 | Probability | Medium |
 | Impact | High |
-| Risk Rating | 8 |
+| Risk Rating | 6 |
 | Proximity | This Quarter |
 | Strategy | Mitigate |
 | Mitigation Plan | Weekly named-owner follow-up. Escalate any team with no date by the 15th to their director, with the deadline attached. |

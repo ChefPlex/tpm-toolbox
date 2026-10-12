@@ -123,7 +123,7 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 ### Formatting Rules
 
 **Channel refs:**
-- Headers: `[#channel-name](https://your-workspace.slack.com/archives/CXXXXXXXXX)`
+- Headers: `[#channel-name](https://your-workspace.slack.com/archives/CXXXXXXXXX)`. `your-workspace` is a placeholder. Replace it with the real workspace host, taken from any Slack URL a tool returned this run (a message permalink or a canvas URL). If no Slack URL is available, write the header as plain `#channel-name` with no link. Never output the placeholder host.
 - Inline: `![](#CXXXXXXXXX)`
 - Never: `<#CXXXXXXXXX>`
 
@@ -151,9 +151,10 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 3. Report URL and canvas ID
 
 **If `$CANVAS_ARG` is canvas ID (starts with `F`):**
-1. Prepend self-link as line 2
-2. Call `slack_update_canvas` with `action: replace`
-3. Confirm update
+1. Call `slack_read_canvas` to get fresh section IDs from its `section_id_mapping`. Section IDs change after every update, so never reuse old ones.
+2. Prepend self-link as line 2 of the new brief
+3. Call `slack_update_canvas` once, with a `sections` array: `delete` every body section, then `append` the new brief after the title section. Do not use the legacy `action` field.
+4. Confirm update and share the returned canvas URL
 
 If canvas write fails, report the error. The conversation output is still valid and complete.
 

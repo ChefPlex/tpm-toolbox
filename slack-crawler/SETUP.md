@@ -46,10 +46,10 @@ For each Slack sidebar section you want to cover:
 
 3. In Claude Code, share the screenshot and say:
    ```
-   Add the `_SectionName` section to slack_sections.md
+   Add the `_SectionName` section to slack_sections.md. Search public and private channels.
    ```
 
-   Claude will read the channel names, call `slack_search_channels` for each one, flag anything it can't resolve, skip DMs and group DMs, and append the completed section table to `~/.claude/skills/slack-crawler/slack_sections.md` - creating the file if it doesn't already exist.
+   Claude will read the channel names, call `slack_search_channels` for each one with `channel_types: public_channel,private_channel`, flag anything it can't resolve, skip DMs and group DMs, and append the completed section table to `~/.claude/skills/slack-crawler/slack_sections.md` - creating the file if it doesn't already exist.
 
 4. Repeat for each section you want to cover.
 
@@ -58,7 +58,7 @@ For each Slack sidebar section you want to cover:
 | Situation | What Claude Does | What You See in the Registry |
 |---|---|---|
 | Shared/external channel | Marks as unresolvable - search API cannot index cross-workspace channels | `⚠️ UNKNOWN` in ID column, 🔗 in Type column |
-| Private channel with unusual name | May not resolve if search cannot find it | Claude flags it - provide the ID manually |
+| Private channel | Channel search covers public channels only by default, so Claude must search with `channel_types: public_channel,private_channel` | Claude flags any it still cannot resolve - provide the ID manually |
 | DMs / group DMs | Skipped entirely | Noted in the section footer |
 
 ### Handling Shared/External Channels

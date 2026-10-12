@@ -160,7 +160,10 @@ def format_emoji_dictionary(template: dict[str, Any]) -> str:
 def generate_content_prompt(template: dict[str, Any], channel_ids: list[str], canvas_ids: list[str], lookback_days: int) -> str:
     lookback_ts = int((datetime.now() - timedelta(days=lookback_days)).timestamp())
     formatting = template.get("formatting_rules", {}) if isinstance(template.get("formatting_rules", {}), dict) else {}
+    # The extractor writes `stakeholder_pattern` as a string; older templates may carry a `stakeholders` list.
+    stakeholder_pattern = template.get("stakeholder_pattern")
     stakeholders = template.get("stakeholders", []) if isinstance(template.get("stakeholders", []), list) else []
+    review_checklist = template.get("review_checklist", []) if isinstance(template.get("review_checklist", []), list) else []
 
     channel_block = format_id_block(
         "Slack channels",
@@ -168,7 +171,17 @@ def generate_content_prompt(template: dict[str, Any], channel_ids: list[str], ca
         f"Read the last {lookback_days} days using `slack_read_channel` with `limit=100`, `response_format=concise`, and `oldest={lookback_ts}` if the tool supports those arguments. If a read returns 100 messages, treat that channel as truncated: earlier messages in the window were not read.",
     )
     canvas_block = format_id_block("Slack canvases", canvas_ids, "Read current content using `slack_read_canvas`.")
-    stakeholder_block = "\n".join(f"- {item}" for item in stakeholders) if stakeholders else "No stakeholder list found in the template. Use only stakeholders found in source material."
+    if isinstance(stakeholder_pattern, str) and stakeholder_pattern.strip():
+        stakeholder_block = f"{stakeholder_pattern.strip()}\nUse only stakeholder names found in source material."
+    elif stakeholders:
+        stakeholder_block = "\n".join(f"- {item}" for item in stakeholders)
+    else:
+        stakeholder_block = "No stakeholder pattern found in the template. Use only stakeholders found in source material."
+    review_block = (
+        "\n".join(f"- {item}" for item in review_checklist)
+        if review_checklist
+        else "- Verify dates, owners, metrics, ticket IDs, and Red / Yellow / Green status."
+    )
 
     return f"""You are generating a draft TPM status report from Slack source material.
 
@@ -246,7 +259,8 @@ The draft should:
 - Omit optional sections only when there is no relevant source data.
 - Preserve ticket IDs, links, dates, and metrics exactly as found.
 - Make risks and decisions easy to see.
-- Include a short `Needs Review` section only if facts are missing, conflicting, or require human confirmation.
+- Include a short `Needs Review` section only if facts are missing, conflicting, or require human confirmation. Check the draft against this review checklist from the template, and put anything that fails it in `Needs Review`:
+{review_block}
 - End with a `Source Coverage` table, always, with one row per channel and canvas listed in Step 1:
 
 | Source | Type | Read? | Messages read | Span covered | Truncated? |

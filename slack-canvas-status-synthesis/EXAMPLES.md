@@ -115,6 +115,8 @@ A monthly executive brief needs a cleaner structure than a team status update:
 
 ### Review rule
 
+Check the `Source Coverage` table first. Each channel read stops at 100 messages, so a 30-day lookback across busy program channels is the run most likely to be truncated. A truncated channel means the early part of the month is missing from the draft.
+
 For executive updates, remove anything that sounds smart but doesn't drive a decision. Leaders do not need a decorated activity log. They need the truth, the risk, and the ask.
 
 ---
