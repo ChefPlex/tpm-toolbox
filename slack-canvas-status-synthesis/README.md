@@ -101,10 +101,13 @@ Use `none` on either position if you only have channels or only have canvases:
 | Variable | What It Does |
 |----------|-------------|
 | `CLAUDE_BIN` | Path to Claude CLI if not on PATH |
-| `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist |
+| `SLACK_MCP_SERVER` | The name `claude mcp list` shows for your Slack connection (default: `claude_ai_Slack`, the claude.ai Slack connector) |
+| `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist (full `mcp__<server>__<tool>` names) |
 | `NO_CAFFEINATE` | Set to `1` to skip caffeinate on macOS |
 
-By default, the extractor allows only `slack_read_canvas` and the generator allows only `slack_read_channel,slack_read_canvas`. This is intentional. There is no switch to bypass Claude's permission checks, on purpose: the read-tool allowlist is the whole safety model, and a bypass flag would remove it for every tool, including ones that post or write. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
+Claude Code names MCP tools `mcp__<server>__<tool>`, and a permission rule written with a bare tool name matches nothing. So the scripts build full names from `SLACK_MCP_SERVER`. By default, the extractor allows only `mcp__<server>__slack_read_canvas` and the generator allows only the channel and canvas read tools. If the server name is wrong, the reads are simply not approved and the draft comes back with nothing read: it fails closed.
+
+Read-only is enforced two ways. The allowlist pre-approves the read tools, and `--disallowedTools` denies Slack's send, schedule, draft, create, and update tools outright, so the scripts cannot write to Slack even if your own Claude Code settings would allow it. There is no switch to bypass Claude's permission checks, on purpose: a bypass flag would remove both for every tool. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
 
 ---
 

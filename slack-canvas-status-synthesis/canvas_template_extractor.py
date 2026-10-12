@@ -23,8 +23,20 @@ from typing import Any
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_TEMPLATE_DIR = SCRIPT_DIR / ".canvas_templates"
 DEFAULT_TIMEOUT_SECONDS = 180
-DEFAULT_ALLOWED_TOOLS = "slack_read_canvas"
+# Claude Code names MCP tools mcp__<server>__<tool>; a bare tool name matches no permission rule.
+# The server part is whatever `claude mcp list` calls your Slack connection.
+DEFAULT_SLACK_SERVER = "claude_ai_Slack"
+READ_TOOLS = ("slack_read_canvas",)
+WRITE_TOOLS = ("slack_send_message", "slack_send_message_draft", "slack_schedule_message",
+               "slack_create_canvas", "slack_update_canvas")
 SAFE_TEMPLATE_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
+SAFE_SERVER_NAME = re.compile(r"^[A-Za-z0-9_-]+$")
+
+
+def mcp_tool_names(server: str, tools: tuple[str, ...]) -> str:
+    if not SAFE_SERVER_NAME.match(server):
+        raise ValueError("SLACK_MCP_SERVER must use only letters, numbers, dashes, or underscores.")
+    return ",".join(f"mcp__{server}__{tool}" for tool in tools)
 
 
 def parse_args() -> argparse.Namespace:
@@ -61,9 +73,13 @@ def build_claude_command(prompt: str) -> list[str]:
         cmd.extend(["caffeinate", "-s"])
     cmd.append(resolve_claude_bin())
 
-    allowed_tools = os.environ.get("CLAUDE_ALLOWED_TOOLS", DEFAULT_ALLOWED_TOOLS).strip()
+    server = os.environ.get("SLACK_MCP_SERVER", DEFAULT_SLACK_SERVER).strip()
+    allowed_tools = os.environ.get("CLAUDE_ALLOWED_TOOLS", mcp_tool_names(server, READ_TOOLS)).strip()
     if allowed_tools and allowed_tools.lower() != "none":
         cmd.extend(["--allowedTools", allowed_tools])
+    # Read-only is enforced here, not assumed: Slack's write tools are denied whatever the
+    # allowlist or the user's own settings would permit.
+    cmd.extend(["--disallowedTools", mcp_tool_names(server, WRITE_TOOLS)])
     cmd.extend(["-p", prompt])
     return cmd
 
