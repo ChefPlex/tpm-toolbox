@@ -379,6 +379,11 @@ def main() -> int:
 
     write_text(output_path, draft.rstrip() + "\n")
 
+    # The prompt asks for a Source Coverage table in every draft. Nothing forces the model to
+    # include one, so say so when it is missing. A warning only: the exit code does not change.
+    if "source coverage" not in draft.lower():
+        print("WARNING: the draft has no Source Coverage table. Check which sources were read before using it.", file=sys.stderr)
+
     print("Draft generated successfully.")
     print(f"Location: {output_path}")
     print("")

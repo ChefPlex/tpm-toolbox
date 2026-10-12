@@ -2,7 +2,7 @@
 
 These examples show the intended use pattern: extract a format from a status canvas that already works, generate a draft from current Slack sources, then review before posting.
 
-The IDs below are placeholders. Don't commit real channel IDs, canvas IDs, customer names, ticket links, or internal program details.
+The IDs below are placeholders. Don't commit real channel IDs, canvas IDs, customer names, ticket links, or internal program details. Every example writes its draft to `drafts/`, which is git-ignored, so a real draft stays out of commits.
 
 ---
 
@@ -30,7 +30,7 @@ You send a weekly status update with the same basic shape every Friday:
 ```bash
 ./canvas_generator_from_template.py weekly_program_status \
   C0PROGRAMCHANNEL F0PLANNINGCANVAS \
-  --output weekly_status_$(date +%Y_%m_%d).md \
+  --output drafts/weekly_status_$(date +%Y_%m_%d).md \
   --lookback 7
 ```
 
@@ -72,7 +72,7 @@ You are tracking a security remediation effort across multiple service teams. Th
 ./canvas_generator_from_template.py security_remediation_status \
   C0SECURITYPM,C0SERVICEOWNERS,C0COMPLIANCE \
   F0SECURITYDASHBOARD,F0EXCEPTIONS \
-  --output security_status_$(date +%Y_%m_%d).md \
+  --output drafts/security_status_$(date +%Y_%m_%d).md \
   --lookback 7
 ```
 
@@ -109,7 +109,7 @@ A monthly executive brief needs a cleaner structure than a team status update:
 ./canvas_generator_from_template.py exec_monthly_brief \
   C0PROGRAM1,C0PROGRAM2,C0PROGRAM3 \
   F0METRICS,F0ROADMAP,F0RISKS \
-  --output exec_brief_$(date +%Y_%m).md \
+  --output drafts/exec_brief_$(date +%Y_%m).md \
   --lookback 30
 ```
 
@@ -146,7 +146,7 @@ After an incident, you need to turn a busy incident channel into a structured fo
 ```bash
 ./canvas_generator_from_template.py incident_followup \
   C0INCIDENT123 none \
-  --output incident_123_followup.md \
+  --output drafts/incident_123_followup.md \
   --lookback 3
 ```
 
@@ -179,7 +179,7 @@ You want a short morning pulse across a few active workstreams:
 ```bash
 ./canvas_generator_from_template.py daily_program_pulse \
   C0TEAM1,C0TEAM2,C0TEAM3 F0PROGRAMCANVAS \
-  --output daily_pulse_$(date +%Y_%m_%d).md \
+  --output drafts/daily_pulse_$(date +%Y_%m_%d).md \
   --lookback 1
 ```
 
@@ -202,7 +202,7 @@ set -euo pipefail
 TEMPLATE="weekly_program_status"
 CHANNELS="C0PROGRAMCHANNEL,C0SECURITYCHANNEL"
 CANVASES="F0PLANNINGCANVAS,F0RISKCANVAS"
-OUTPUT="weekly_status_$(date +%Y_%m_%d).md"
+OUTPUT="drafts/weekly_status_$(date +%Y_%m_%d).md"
 
 cd "$(dirname "$0")"
 
@@ -224,7 +224,7 @@ set -euo pipefail
 TEMPLATE="exec_monthly_brief"
 CHANNELS="C0PROGRAM1,C0PROGRAM2,C0PROGRAM3"
 CANVASES="F0METRICS,F0ROADMAP,F0RISKS"
-OUTPUT="exec_brief_$(date +%Y_%m).md"
+OUTPUT="drafts/exec_brief_$(date +%Y_%m).md"
 
 cd "$(dirname "$0")"
 
@@ -248,6 +248,8 @@ This is safe enough:
 # Weekly draft every Friday at 4 PM
 0 16 * * 5 cd /path/to/tpm-toolbox/slack-canvas-status-synthesis && ./weekly_status.sh
 ```
+
+Two things differ under cron. Cron runs with a short `PATH`, so `claude` may not be found: set `CLAUDE_BIN` to its full path in the crontab. And no one is there to answer a prompt, so the Slack connection must already be signed in for that user, and the read tools must be approved by the allowlist. A read that needs approval is simply not made, and the `Source Coverage` table should show it as not read.
 
 This repo does not include auto-posting to Slack. That is intentional. Review is part of the workflow, not a nice-to-have.
 

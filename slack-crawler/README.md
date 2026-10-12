@@ -59,7 +59,7 @@ mkdir -p ~/.claude/skills/slack-crawler && \
 cp SKILL.md ~/.claude/skills/slack-crawler/SKILL.md
 ```
 
-Claude Code picks up skills from `~/.claude/skills/` automatically. No restart needed.
+Claude Code picks up skills from `~/.claude/skills/` automatically. No restart needed. If `~/.claude/skills/` did not exist when your session started, run `/reload-skills` once.
 
 ---
 
@@ -115,7 +115,7 @@ The skill searches these paths in order and uses the first file it finds:
 # [Section Name] - Slack Crawler Brief
 > Period: Last 14 days | As of: [date/time]
 > Channels: [N readable] of [N total]
-> Overall: GREEN / YELLOW / RED - one-sentence rationale
+> Overall: GREEN / YELLOW / RED - one-sentence rationale (only when the messages support one)
 
 ## HOT - Last 24 Hours
 - [CRITICAL] specific event - person, #channel, timestamp
@@ -166,7 +166,7 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 **Build a cron script for a section** - After running a brief, say "build a cron for [section-name]". Claude generates a bash cron script and canvas update prompt.
 
-**Deep dive one channel** - Say "deep dive on #channel-name". The Slack read tool returns at most 100 messages per call, so Claude pages back through the full window with the tool's `cursor` and produces a thread-by-thread breakdown.
+**Deep dive one channel** - Say "deep dive on #channel-name". The Slack read tool returns at most 100 messages per call, so Claude pages back through the full window with the tool's `cursor` and produces a breakdown by thread. The channel read may not include replies inside threads, and the Coverage Notes say so.
 
 **Generate a status report from the canvas** - Use the [Slack Canvas Status Synthesis](../slack-canvas-status-synthesis/) tool in this repo. The crawler does the weekly intelligence work; the synthesis tool does the assembly when you need to report.
 
@@ -185,7 +185,7 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 ## Origin
 
-This tool grew out of earlier work in a private original, built for a specific internal program environment. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
+This tool grew out of an earlier private version, built for one internal program environment. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
 
 ---
 

@@ -8,7 +8,7 @@ It's the authoritative source when running the skill or building canvas cron scr
 - Use `slack_read_channel` (not `slack_search_public`) with `limit=100` and `response_format=concise` (the same limit the skill uses; a channel with more messages than that in the window is truncated, so report it as truncated)
 - Batch reads to avoid rate limits (2-3 channels per batch)
 - Private channels (🔒) are accessible via API if you're a member
-- Shared/external channels (🔗) are NOT indexed by the Slack API - IDs unresolvable via search
+- Shared/external channels (🔗) are not found by `slack_search_channels`, but are readable by ID if you are a member
 
 DMs and group DMs are excluded from this registry. They are not channels.
 
@@ -57,7 +57,7 @@ What this section covers - operations, release planning, or governance.
 | #slack-channel-8  | C0000000008 | 🔒 Private | Release planning coordination. |
 | #slack-channel-9  | C0000000009 | 🌐 Public | Status updates. |
 | #slack-channel-10 | C0000000010 | 🌐 Public | Help/support channel with office hours. |
-| #slack-channel-11 | ⚠️ UNKNOWN | 🔗 Shared/External | External badge - shared vendor channel. Not indexed by Slack API. |
+| #slack-channel-11 | ⚠️ UNKNOWN | 🔗 Shared/External | External badge - shared vendor channel. Not found by channel search. |
 
 **Total channels:** 4 (3 resolved, 1 unresolved - `#slack-channel-11` is a shared/external channel)
 

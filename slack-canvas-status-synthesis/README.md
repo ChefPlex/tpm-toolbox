@@ -48,7 +48,7 @@ Find a status canvas that already works. Extract its structure once.
 ./canvas_template_extractor.py F0YOURCANVASID your_template_name
 ```
 
-This reads the canvas, extracts the format without retaining confidential content, and writes a JSON template to `.canvas_templates/your_template_name.json`.
+This reads the canvas, asks Claude to replace names, ticket IDs, links, dates, and metrics with placeholders, and writes a JSON template to `.canvas_templates/your_template_name.json`. The placeholders come from the prompt, not from code, and the JSON keeps the source canvas ID. Review the JSON before committing it.
 
 Run this once per template. Re-run if the status format changes significantly.
 
@@ -102,18 +102,18 @@ Use `none` on either position if you only have channels or only have canvases:
 |----------|-------------|
 | `CLAUDE_BIN` | Path to Claude CLI if not on PATH |
 | `SLACK_MCP_SERVER` | The name `claude mcp list` shows for your Slack connection (default: `claude_ai_Slack`, the claude.ai Slack connector) |
-| `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist (full `mcp__<server>__<tool>` names) |
+| `CLAUDE_ALLOWED_TOOLS` | Override the default read-tool allowlist (full `mcp__<server>__<tool>` names). `none` sends no allowlist at all: the deny list still applies, and the reads then depend on your own Claude Code settings |
 | `NO_CAFFEINATE` | Set to `1` to skip caffeinate on macOS |
 
 Claude Code names MCP tools `mcp__<server>__<tool>`, and a permission rule written with a bare tool name matches nothing. So the scripts build full names from `SLACK_MCP_SERVER`. By default, the extractor allows only `mcp__<server>__slack_read_canvas` and the generator allows only the channel and canvas read tools. If the server name is wrong, the reads are simply not approved and the draft comes back with nothing read: it fails closed.
 
-Read-only is enforced two ways. The allowlist pre-approves the read tools, and `--disallowedTools` denies Slack's send, schedule, draft, create, and update tools outright, so the scripts cannot write to Slack even if your own Claude Code settings would allow it. Both depend on `SLACK_MCP_SERVER` naming your real Slack server: check it against `claude mcp list` before the first run, because a wrong name makes the deny list match nothing too. There is no switch to bypass Claude's permission checks, on purpose: a bypass flag would remove both for every tool. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
+Read-only is enforced two ways, using the Claude Code [`--allowedTools` and `--disallowedTools`](https://code.claude.com/docs/en/cli-reference) flags. The allowlist pre-approves the read tools, and `--disallowedTools` denies five Slack write tools by name (`slack_send_message`, `slack_send_message_draft`, `slack_schedule_message`, `slack_create_canvas`, `slack_update_canvas`), even if your own Claude Code settings would allow them. Those five are the write tools the claude.ai Slack connector offered as of October 2026. A write tool with any other name is not on the deny list, so check what your Slack server offers. Both depend on `SLACK_MCP_SERVER` naming your real Slack server: check it against `claude mcp list` before the first run, because a wrong name makes the deny list match nothing too. There is no switch to bypass Claude's permission checks, on purpose: a bypass flag would remove both for every tool. The scripts read sources and return content to stdout. They do not post, send, update, or write anything in Slack.
 
 ---
 
 ## Weekly Wrapper Pattern
 
-For repeat use, wrap the command so the inputs aren't retyped every week:
+For repeat use, wrap the command so the inputs aren't retyped every week. The draft goes to `drafts/`, which is git-ignored, so internal status does not end up in a commit:
 
 ```bash
 #!/usr/bin/env bash
@@ -122,7 +122,7 @@ set -euo pipefail
 TEMPLATE="weekly_program_status"
 CHANNELS="C0PROGRAMCHANNEL,C0SECURITYCHANNEL"
 CANVASES="F0PLANNINGCANVAS,F0RISKCANVAS"
-OUTPUT="weekly_status_$(date +%Y_%m_%d).md"
+OUTPUT="drafts/weekly_status_$(date +%Y_%m_%d).md"
 
 cd "$(dirname "$0")"
 
@@ -139,12 +139,14 @@ echo "Review before posting. The tool writes drafts, not truth."
 
 ## What Comes Out
 
-A markdown draft matching the structure of your source template. Required sections are always present. Optional sections appear only when there's source material to support them. If a required fact is missing or conflicting, the draft includes a `Needs Review` section naming the gap rather than filling it with something plausible.
+A markdown draft matching the structure of your source template. The prompt asks for every required section, and for optional sections only when there's source material to support them. If a required fact is missing or conflicting, the prompt asks for a `Needs Review` section naming the gap rather than filling it with something plausible.
 
-Two things are always in the draft:
+The prompt asks for two things in every draft:
 
-- **A suggested status, marked "TPM decides".** The tool cannot decide Red / Yellow / Green. It proposes a color with a one-line rationale from the sources, and the TPM sets the real one.
+- **A suggested status, marked "TPM decides".** The tool cannot decide Red / Yellow / Green. It proposes a color with a one-line rationale from the sources, and the TPM sets the real one. The [status report generator](https://github.com/ChefPlex/ai-automations/tree/main/status-report-generator) in `ai-automations` takes the stricter line: it lays out the evidence for each color and suggests none.
 - **A `Source Coverage` table**, one row per channel and canvas: whether it was read, how many messages, what span they cover, and whether the read was truncated. Channel reads stop at 100 messages, so a busy channel can be only partly covered, and the table is how you find out.
+
+These are instructions to Claude, not checks in code. The generator writes whatever Claude returns. It prints a warning if the draft has no `Source Coverage` table, and it does not check the suggested status at all. Thread replies are not read either: the generator allows only the channel and canvas read tools, so a decision made inside a thread can be missing from the draft.
 
 Before you send it, check:
 

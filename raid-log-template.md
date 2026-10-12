@@ -12,7 +12,9 @@ For how to run the log rather than what fields it has, read the
 **One structural difference, on purpose.** The spreadsheet uses one wide row per entry, which is
 right for a spreadsheet and unreadable as a 16-column markdown table. Here each entry is a small
 block, and each section opens with a narrow at-a-glance table so you can still scan the whole log
-in one screen. Same fields, shape that suits the medium.
+in one screen. Same fields, shape that suits the medium, with one exception: the spreadsheet's
+Days Open column on Risks and Issues is calculated, so it is left out here, where it would go
+stale.
 
 ---
 

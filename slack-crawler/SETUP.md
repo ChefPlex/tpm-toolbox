@@ -14,7 +14,7 @@ Two files. No code to compile, no dependencies beyond Claude Code and the Slack 
 | Requirement | How to Check |
 |---|---|
 | Claude Code CLI | Run `claude --version` - should return a version number |
-| Slack MCP plugin | In Claude Code, run `/slack-crawler` - if it says "Slack tools not available", the plugin is not configured |
+| Slack MCP plugin | Run `claude mcp list` - your Slack connection should be in the list and connected. If it is not, the plugin is not configured |
 | Channel membership | You must be a member of any private 🔒 channels you want the skill to read |
 
 ---
@@ -26,7 +26,7 @@ mkdir -p ~/.claude/skills/slack-crawler
 cp SKILL.md ~/.claude/skills/slack-crawler/SKILL.md
 ```
 
-Claude Code picks up skills from `~/.claude/skills/` automatically. No restart, no config change. The skill appears as `/slack-crawler` in your next session.
+Claude Code picks up skills from `~/.claude/skills/` automatically. No restart, no config change. The skill appears as `/slack-crawler` in the current session. If `~/.claude/skills/` did not exist when the session started, run `/reload-skills` once.
 
 ---
 

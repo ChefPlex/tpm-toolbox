@@ -124,7 +124,8 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 
 **Channel refs:**
 - Headers: `[#channel-name](https://your-workspace.slack.com/archives/CXXXXXXXXX)`. `your-workspace` is a placeholder. Replace it with the real workspace host, taken from any Slack URL a tool returned this run (a message permalink or a canvas URL). If no Slack URL is available, write the header as plain `#channel-name` with no link. Never output the placeholder host.
-- Inline: `![](#CXXXXXXXXX)`
+- Inline, in canvas output: `![](#CXXXXXXXXX)`. Slack canvases render this as a channel mention.
+- Inline, in conversation output: plain `#channel-name`. The canvas syntax renders as a broken image there.
 - Never: `<#CXXXXXXXXX>`
 
 **User refs:** Plain names only (e.g. "Jane Smith")
@@ -169,6 +170,10 @@ If canvas write fails, report the error. The conversation output is still valid 
 - Deep dive → "deep dive on #channel-name"
 - Build cron → "build a cron for [section-name]"
 ```
+
+**If the user asks for a deep dive on one channel:** read that channel over the same 14-day window with `slack_read_channel`, and page back with the tool's `cursor` until the window is covered. This is the one case where paging is used. Produce a breakdown by thread from what the channel read returns, and say in Coverage Notes how many messages were read and that replies inside threads may not be included.
+
+**If the user asks to build a cron:** write a bash script that runs this brief for the section, plus the canvas update prompt it uses. Show both to the user. Do not install or schedule the script.
 
 ---
 
