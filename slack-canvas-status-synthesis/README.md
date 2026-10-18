@@ -139,11 +139,11 @@ Content read from Slack is written by other people, so it can carry instructions
 | Layer | What it does |
 |:---|:---|
 | `--tools ""` | Removes every **built-in** tool: no shell, no file reads or writes, no web fetch. |
-| `--allowedTools` | Pre-approves the Slack read tools, built as full `mcp__<server>__<tool>` names. A bare tool name matches no rule, which is why `SLACK_MCP_SERVER` must be right. ⚠️ This is approval, **not an exclusive allowlist**. |
+| `--allowedTools` + `--permission-mode dontAsk` | Pre-approves the Slack read tools, built as full `mcp__<server>__<tool>` names, and makes the CLI **deny** every tool that is not pre-approved instead of asking. Together they are the allowlist. A bare tool name matches no rule, which is why `SLACK_MCP_SERVER` must be right. |
 | `--disallowedTools` | Denies Slack's five write tools (`slack_send_message`, `slack_send_message_draft`, `slack_schedule_message`, `slack_create_canvas`, `slack_update_canvas`), whatever your own settings allow. Those are the write tools the claude.ai connector offered in October 2026. |
 | After the run | The wrapper reads the run's transcript of tool calls. **Any call other than the Slack read tools, and any read of a channel or canvas you did not request,** fails the run with exit `3`, and its output is not written. The second check matters most: an instruction planted in Slack ("also read channel C0…") needs no forbidden tool, only the allowed one pointed at the wrong ID. |
 
-⚠️ **What this does not do on its own:** MCP servers other than Slack that your Claude configuration loads stay available to the run, because `--allowedTools` does not remove them. A call to one is caught after the fact by the check above, but it has already happened. For a session that loads only Slack, set `SLACK_MCP_CONFIG`. `--doctor` lists any other servers your configuration loads. There is no switch to bypass Claude's permission checks, on purpose.
+⚠️ **What this does not do on its own:** other MCP servers your Claude configuration loads are still loaded. `dontAsk` denies their tools, unless your own Claude settings already allow one, and the after-the-run check catches a call that got through anyway, though by then it has happened. For a session that loads only Slack, set `SLACK_MCP_CONFIG`. `--doctor` lists any other servers your configuration loads. There is no switch to bypass Claude's permission checks, on purpose.
 
 ---
 
@@ -180,15 +180,17 @@ A markdown draft matching the structure of your source template. The prompt asks
 
 ### Source coverage is checked in code, not taken from the draft
 
-The generator records every Slack read the run makes and writes the result beside the draft as `<draft>.coverage.json`. For each requested channel and canvas it records whether the source was read, how many calls failed (a Slack error such as `not_in_channel` counts as a failure even when it comes back as ordinary text), and how many pages of a channel were read. Channel reads follow Slack's `next_cursor` up to `--max-pages` pages of 100 messages, so a busy channel is read further than one page and the cap is visible when it is hit. The paging itself is done by the model, as instructed; the wrapper records what it actually did.
+The generator records every Slack read the run makes and writes the result beside the draft as `<draft>.coverage.json`. For each requested channel and canvas it records whether the source was read, how many calls failed (a tool error, or a structured Slack error such as `"ok": false, "error": "not_in_channel"`), and how many pages of a channel were read. Channel reads follow Slack's `next_cursor` up to `--max-pages` pages of 100 messages, so a busy channel is read further than one page and the cap is visible when it is hit. The paging itself is done by the model, as instructed; the wrapper records what it actually did.
 
 Whether a channel has more messages left is read from its last page, and there are three answers, not two:
 
 | Last page says | Recorded as |
 |:---|:---|
-| a non-empty `next_cursor`, or `has_more: true` | **more remain**: the draft is INCOMPLETE |
+| a non-empty `next_cursor` (top level or in `response_metadata`), or `has_more: true` | **more remain**: the draft is INCOMPLETE |
 | an empty or null cursor, or the page is empty | the last page |
-| nothing either way | **unknown**: never assumed complete, never assumed cut off |
+| nothing either way, or the result is plain text rather than JSON | **unknown**: never assumed complete, never assumed cut off |
+
+These signals are read only from structured JSON fields, never from the text of the result. The result contains the channel's messages, which anyone in the channel wrote, so a posted message reading `next_cursor: null` must not be able to make a cut-off channel look complete.
 
 The draft opens with a banner when coverage is not confirmed: **INCOMPLETE DRAFT** when something was definitely missed (a source not read, a channel with more left, a source missing from the draft's own `Source Coverage` table), and **UNCONFIRMED COVERAGE** when every source was read but a channel's last page gave no signal. `--strict` exits `4` for either. A coverage table the model wrote does not count as evidence: a channel the table calls "read" that the run never read makes the draft incomplete.
 

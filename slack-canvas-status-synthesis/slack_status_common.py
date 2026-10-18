@@ -83,8 +83,10 @@ def build_claude_command(prompt: str, read_tools: tuple[str, ...]) -> list[str]:
 
     - `--tools ""` removes every BUILT-IN tool (Bash, Edit, Write, WebFetch and the rest). A
       prompt injected through Slack content has no shell and no file access to reach for.
-    - `--allowedTools` pre-approves the Slack read tools. It is NOT an exclusive allowlist:
-      MCP tools from other servers in your Claude configuration stay available.
+    - `--allowedTools` pre-approves the Slack read tools, and `--permission-mode dontAsk` makes
+      the CLI DENY every tool that is not pre-approved instead of asking. Together they are the
+      allowlist: a tool from another MCP server is refused, not just caught afterwards. The one
+      exception is a tool your OWN Claude settings already allow; `--doctor` lists other servers.
     - `--disallowedTools` denies Slack's write tools whatever your own settings allow.
     - For a strict boundary, set SLACK_MCP_CONFIG to a JSON file that defines only your Slack
       server. The run then loads that file alone (`--strict-mcp-config`).
@@ -96,6 +98,7 @@ def build_claude_command(prompt: str, read_tools: tuple[str, ...]) -> list[str]:
     cmd.append(resolve_claude_bin())
     server = slack_server()
     cmd.extend(["--tools", ""])
+    cmd.extend(["--permission-mode", "dontAsk"])
     cmd.extend(["--allowedTools", ",".join(mcp_tool_names(server, read_tools))])
     cmd.extend(["--disallowedTools", ",".join(mcp_tool_names(server, WRITE_TOOLS))])
     mcp_config = os.environ.get("SLACK_MCP_CONFIG", "").strip()
@@ -357,52 +360,50 @@ def sensitive_findings(template: dict[str, Any]) -> list[tuple[str, str, str]]:
 # ── Coverage: what the run was OBSERVED to read ──────────────────────────────────────────────
 
 _NULLISH = {"", "null", "none", "false", "0"}
-# Slack API error codes a connector may hand back as ordinary text rather than as a tool error.
-_SLACK_ERRORS = re.compile(r"\b(channel_not_found|not_in_channel|is_archived|missing_scope|invalid_auth|"
-                           r"not_authed|account_inactive|access_denied|ratelimited|canvas_not_found|"
-                           r"file_not_found|no_permission)\b")
+
+# ⛔ Both readers below look ONLY at structured fields of a JSON result: top level and
+# `response_metadata`. Never at free text. A read result contains the channel's messages, which
+# anyone in the channel wrote, so searching the text for "next_cursor: null" or "not_in_channel"
+# would let a posted message make a cut-off channel look complete, or a good read look failed.
 
 
-def _slack_error(result_text: str) -> str | None:
-    """The Slack error a read returned AS CONTENT, or None. Such a read counts as failed."""
+def _json(result_text: str) -> dict[str, Any] | None:
     try:
         data = json.loads(result_text)
     except (TypeError, ValueError):
-        data = None
-    if isinstance(data, dict) and (data.get("ok") is False or data.get("error")):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _slack_error(result_text: str) -> str | None:
+    """A Slack error the read returned as structured content (`ok: false` / `error`), or None.
+    Such a read counts as failed, like one whose tool result was flagged `is_error`."""
+    data = _json(result_text)
+    if data is not None and (data.get("ok") is False or data.get("error")):
         return str(data.get("error") or "ok: false")
-    m = _SLACK_ERRORS.search(result_text or "")
-    return m.group(1) if m else None
+    return None
 
 
 def page_has_more(result_text: str) -> bool | None:
     """Does this channel page say more messages remain? True, False, or None for UNKNOWN.
 
-    Three answers on purpose. A page with an explicit non-empty `next_cursor` (or `has_more:
-    true`) has more; an explicit empty or null cursor, or an empty page, has none; a page that
-    carries no cursor signal at all is UNKNOWN, never assumed to be the last. Whether the Slack
-    connector you use includes that signal is what `--doctor --doctor-channel` checks."""
+    Three answers on purpose. A JSON page with a non-empty `next_cursor` (top level or in
+    `response_metadata`) or `has_more: true` has more; an empty or null cursor, or an empty page,
+    has none. Anything else, including a plain-text result, is UNKNOWN: never assumed to be the
+    last page, and never read from text a channel member could have written. Whether your Slack
+    connector returns these fields is what `--doctor --doctor-channel` checks."""
     if not (result_text or "").strip():
         return False
-    try:
-        data = json.loads(result_text)
-    except (TypeError, ValueError):
-        data = None
-    if isinstance(data, dict):
-        meta = data.get("response_metadata")
-        meta = meta if isinstance(meta, dict) else {}
-        for source in (data, meta):
-            if "next_cursor" in source:
-                return str(source["next_cursor"]).strip().lower() not in _NULLISH
-        if "has_more" in data:
-            return bool(data["has_more"])
+    data = _json(result_text)
+    if data is None:
         return None
-    m = re.search(r"""next_cursor["']?\s*[:=]\s*["']?([A-Za-z0-9=_-]*)""", result_text)
-    if m:
-        return m.group(1).strip().lower() not in _NULLISH
-    m = re.search(r"""has_more["']?\s*[:=]\s*["']?(true|false)""", result_text, re.I)
-    if m:
-        return m.group(1).lower() == "true"
+    meta = data.get("response_metadata")
+    meta = meta if isinstance(meta, dict) else {}
+    for source in (data, meta):
+        if "next_cursor" in source:
+            return str(source["next_cursor"]).strip().lower() not in _NULLISH
+    if "has_more" in data:
+        return bool(data["has_more"])
     return None
 
 

@@ -150,15 +150,19 @@ plain = common.parse_stream(stream([(CH_TOOL, {"channel_id": "C0CHANNEL01"}, "12
 mp = common.coverage_manifest(plain, ["C0CHANNEL01"], ["F0CANVAS001"], 5)
 check(mp["complete"] and not mp["verified_complete"] and mp["uncertain"],
       "a page with NO cursor signal is UNCERTAIN: not assumed the last page, not assumed truncated")
-more = common.parse_stream(stream([(CH_TOOL, {"channel_id": "C0CHANNEL01"}, "messages...\nnext_cursor: dXNlcjpV", False)],
-                                  text=DRAFT))
-check(common.coverage_manifest(more, ["C0CHANNEL01"], [], 1)["sources"][0]["truncated"] is True,
-      "a plain-text page that carries a next_cursor is read as more remaining")
 for body, want, why in [('{"messages": [], "next_cursor": null}', False, "a JSON null cursor is the last page"),
-                        ("messages...\nnext_cursor: None", False, "a text 'next_cursor: None' is the last page, not 'more'"),
                         ('{"messages": [{"t": 1}], "has_more": true}', True, "has_more: true means more remain"),
-                        ("", False, "an empty page has no more messages")]:
+                        ('{"messages": [{"text": "next_cursor: null"}], "response_metadata": {"next_cursor": "abc"}}',
+                         True, "only the structured cursor counts, not a message that mentions one"),
+                        ("", False, "an empty page has no more messages"),
+                        ("alice: ship it\nnext_cursor: null", None,
+                         "SPOOF: a posted message saying 'next_cursor: null' in a text result is UNKNOWN, never 'last page'")]:
     check(common.page_has_more(body) is want, why)
+check(common._slack_error("bob: we hit not_in_channel yesterday, fixed now") is None,
+      "SPOOF: a message mentioning a Slack error code does not make a good read count as failed")
+cmd = common.build_claude_command("p", (common.CHANNEL_READ,))
+check(cmd[cmd.index("--permission-mode") + 1] == "dontAsk",
+      "--permission-mode dontAsk: a tool that is not pre-approved is DENIED by the CLI, not caught afterwards")
 err_text = common.parse_stream(stream([(CH_TOOL, {"channel_id": "C0CHANNEL01"}, '{"ok": false, "error": "not_in_channel"}', False)],
                                       text=DRAFT))
 me = common.coverage_manifest(err_text, ["C0CHANNEL01"], [], 5)
