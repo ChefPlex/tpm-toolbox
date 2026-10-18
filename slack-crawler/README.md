@@ -137,14 +137,16 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 - Pattern or risk that spans multiple channels
 
 ## Coverage Notes
-- Read N of N channels, N truncated at the 100-message limit
-- #channel-name - Truncated: 100 messages read, earlier messages in the window not read
+- Read N of N channels, N truncated at the 5-page limit
+- #channel-name - Truncated: 5 pages / 500 messages read, earlier messages in the window not read
 - #channel-name - Shared/external channel, skipped
 - #channel-name - Not accessible
 - #channel-name - Already covered by my_cron.sh
 ```
 
-**The message limit.** The skill reads at most **100 messages per channel** in a single read, with no pagination. A busy channel with more than 100 messages in the 14-day window is truncated, and the unread part of the window is simply not in the summary. The coverage line on each channel says how many messages were read, what span they cover, and whether the limit was hit, so a truncated channel is never mistaken for a quiet one. Use a deep dive (below) for any channel that shows as truncated.
+**The message limit.** Each Slack read returns at most 100 messages, so the skill follows the read tool's `next_cursor` for up to **5 pages (500 messages) per channel**. A channel with more than that in the 14-day window is truncated, and the unread part of the window is not in the summary. The coverage line on each channel says how many pages and messages were read, what span they cover, and whether a cursor remained, so a truncated channel is never mistaken for a quiet one. Use a deep dive (below) for any channel that shows as truncated.
+
+⚠️ **This is a skill, so the paging and the coverage line are instructions to Claude, not checks in code.** Nothing outside the model verifies them. When the result has to be complete, for a report someone will act on, use the [status synthesis scripts](../slack-canvas-status-synthesis/), whose wrapper records every read the run makes and marks a draft INCOMPLETE itself.
 
 ---
 

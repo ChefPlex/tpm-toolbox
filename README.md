@@ -40,8 +40,8 @@ people will not have set up. Better to say that here than three clicks in.
 | Program Kickoff Checklist | Ready | Good for getting scope, stakeholders, risks, dependencies, and operating rhythm aligned before kickoff. |
 | Meeting Notes + Action Item Tracker | Ready | Useful for recurring execution hygiene and follow-through. |
 | RAID Log Template (Excel and Markdown) | Ready | Solid base tracker, same fields either way. Pair it with the RAID Log Guide in `tpm-templates`. |
-| Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. |
-| Slack Canvas Status Synthesis | Working | Strong draft-generation workflow. Requires review before publishing. |
+| Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. A skill, so its paging and coverage line are instructions to Claude, not checks in code, and there is no automated test. |
+| Slack Canvas Status Synthesis | Working | Draft output only, reviewed before publishing. Tested: `test_slack_status.py` runs both scripts end to end against recorded tool-call transcripts (template schema, smuggled instructions, sensitive data, tool boundary, observed coverage). A real setup is checked with `--doctor`. |
 
 ---
 
@@ -67,6 +67,8 @@ By the time you need to write a status report, you have a current, organized pic
 ```
 
 Pass the crawler's canvas ID as the third argument (comma-separate it with any other canvases). The synthesis tool then reads your program channels and the canvas the crawler just updated, applies a template extracted from one of your existing status canvases, and produces a draft in your usual format.
+
+⚠️ **Pass the program channels too, not only the crawler canvas.** The crawler's brief is a summary a model wrote, so a blocker the crawler missed is missing from the brief as well, and a draft built only on the brief cannot see it. With the channels included, the synthesis tool reads the original messages, and its coverage check records, from the reads it observed, which channels were read in full, which were cut short, and which it could not confirm. Treat a fact that appears only in the brief as secondary, as the [Status Contract](STATUS-CONTRACT.md) says.
 
 It will not be perfect. It will get you most of the way there: the structure, the populated sections, the signal pulled from Slack, and the first draft of the report. You still own the final call.
 

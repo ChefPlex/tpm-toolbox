@@ -115,7 +115,7 @@ A monthly executive brief needs a cleaner structure than a team status update:
 
 ### Review rule
 
-Check the `Source Coverage` table first. Each channel read stops at 100 messages, so a 30-day lookback across busy program channels is the run most likely to be truncated. A truncated channel means the early part of the month is missing from the draft.
+Check the top of the draft first. A 30-day lookback across busy program channels is the run most likely to hit the page cap (5 pages of 100 messages per channel by default). When it does, the draft opens with an INCOMPLETE banner naming the channel, and the `.coverage.json` beside it gives the page count. A truncated channel means the early part of the month is missing from the draft. Raise `--max-pages` for this run if the channels are that busy.
 
 For executive updates, remove anything that sounds smart but doesn't drive a decision. Leaders do not need a decorated activity log. They need the truth, the risk, and the ask.
 
@@ -209,7 +209,8 @@ cd "$(dirname "$0")"
 ./canvas_generator_from_template.py "$TEMPLATE" \
   "$CHANNELS" "$CANVASES" \
   --output "$OUTPUT" \
-  --lookback 7
+  --lookback 7 \
+  --strict          # exit 4 if any source was not read in full; set -e stops the script
 
 echo "Draft generated: $OUTPUT"
 echo "Review before posting. The tool writes drafts, not truth."
@@ -249,7 +250,7 @@ This is safe enough:
 0 16 * * 5 cd /path/to/tpm-toolbox/slack-canvas-status-synthesis && ./weekly_status.sh
 ```
 
-Two things differ under cron. Cron runs with a short `PATH`, so `claude` may not be found: set `CLAUDE_BIN` to its full path in the crontab. And no one is there to answer a prompt, so the Slack connection must already be signed in for that user, and the read tools must be approved by the allowlist. A read that needs approval is simply not made, and the `Source Coverage` table should show it as not read.
+Three things differ under cron. Cron runs with a short `PATH`, so `claude` may not be found: set `CLAUDE_BIN` to its full path in the crontab. No one is there to answer a prompt, so the Slack connection must already be signed in for that user, and the read tools must be approved by the allowlist. A read that needs approval is simply not made. And no one reads the warning either, so run with `--strict`: an unread or truncated source then exits `4` instead of `0`, which cron's mail or your wrapper can act on. Run `--doctor` once as the cron user before scheduling it.
 
 This repo does not include auto-posting to Slack. That is intentional. Review is part of the workflow, not a nice-to-have.
 

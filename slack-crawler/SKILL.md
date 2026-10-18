@@ -58,7 +58,7 @@ For each readable channel, call `slack_read_channel` with `limit: 100`, `respons
 
 Use `oldest: cutoff_14d`. Batch reads in groups of 3.
 
-**Per-channel limit: 100 messages.** This is one read per channel, with no pagination. A channel with more than 100 messages in the window is truncated: the rest of the window is not read. For each channel, record messages read, the oldest and newest timestamps actually returned, and whether the read hit the limit (100 returned = treat as truncated). This feeds the coverage line in the brief. Never present a truncated channel as a full 14-day summary.
+**Pagination: up to 5 pages per channel.** Each read returns at most 100 messages. If a response carries a non-empty `next_cursor`, call `slack_read_channel` again with the same `oldest` and `cursor` set to it, until the cursor is empty or 5 pages have been read (500 messages). A channel that still has a `next_cursor` after 5 pages is **truncated**: the oldest part of the window is not read. For each channel, record pages read, messages read, the oldest and newest timestamps actually returned, and whether a `next_cursor` remained. This feeds the coverage line in the brief. Never present a truncated channel as a full 14-day summary, and never treat "100 messages returned" as complete without checking the cursor.
 
 ---
 
@@ -111,8 +111,8 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 ---
 
 ## Coverage Notes
-- READ: [N] of [N total] channels, [N] truncated at the 100-message limit
-- TRUNCATED: [#channel-name](URL) - 100 messages read, covers [oldest read] onward, earlier messages in the window not read
+- READ: [N] of [N total] channels, [N] truncated at the 5-page limit
+- TRUNCATED: [#channel-name](URL) - [N] pages / [N] messages read, covers [oldest read] onward, earlier messages in the window not read
 - SKIP: #channel-name — Shared/external, skipped
 - SKIP: [#channel-name](URL) — Not accessible
 - INFO: [#channel-name](URL) — Covered by script-name.sh
@@ -171,7 +171,7 @@ If canvas write fails, report the error. The conversation output is still valid 
 - Build cron → "build a cron for [section-name]"
 ```
 
-**If the user asks for a deep dive on one channel:** read that channel over the same 14-day window with `slack_read_channel`, and page back with the tool's `cursor` until the window is covered. This is the one case where paging is used. Produce a breakdown by thread from what the channel read returns, and say in Coverage Notes how many messages were read and that replies inside threads may not be included.
+**If the user asks for a deep dive on one channel:** read that channel over the same 14-day window with `slack_read_channel`, and page back with the tool's `cursor` until the window is covered, with no 5-page cap. This is the one case where the page cap does not apply. Produce a breakdown by thread from what the channel read returns, and say in Coverage Notes how many messages were read and that replies inside threads may not be included.
 
 **If the user asks to build a cron:** write a bash script that runs this brief for the section, plus the canvas update prompt it uses. Show both to the user. Do not install or schedule the script.
 
