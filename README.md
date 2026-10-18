@@ -136,8 +136,15 @@ Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](htt
 
 ## License
 
-Copyright (c) 2026 Eric White. Licensed under [CC BY 4.0](LICENSE): use it, adapt it, put it to
-work in your own program. Credit is the only condition.
+Two licenses, one rule: **code is MIT, documents are CC BY 4.0.**
 
-The Python in [`slack-canvas-status-synthesis/`](slack-canvas-status-synthesis/) stays under its
-own MIT license.
+| What | License |
+|:---|:---|
+| The code: everything in [`slack-canvas-status-synthesis/`](slack-canvas-status-synthesis/) except its Markdown | [MIT](slack-canvas-status-synthesis/LICENSE). Use it in your own tooling, commercial or not, with the notice kept |
+| Everything else: templates, guides, the RAID log workbook, the Slack Crawler skill, and all Markdown | [CC BY 4.0](LICENSE). Use it, adapt it, put it to work in your own program. Credit is the only condition |
+
+Copyright (c) 2024-2026 Eric White.
+
+---
+
+**Part of the ChefPlex TPM portfolio** · Status: Active · [I need to… find the right document across all the repositories](https://github.com/ChefPlex/tpm-templates/blob/main/PORTFOLIO-GUIDE.md) · [All repositories](https://github.com/ChefPlex)

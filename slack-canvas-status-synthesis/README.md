@@ -235,4 +235,4 @@ The tests run the real scripts end to end against a fake `claude` that replays t
 
 ---
 
-*Part of the [tpm-toolbox](https://github.com/ChefPlex/tpm-toolbox). Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)*
+*Part of the [tpm-toolbox](https://github.com/ChefPlex/tpm-toolbox). The code in this folder is [MIT](LICENSE); this README and EXAMPLES.md are [CC BY 4.0](../LICENSE). Maintained by [Eric White](https://www.linkedin.com/in/edwhite) | [ChefPlex](https://github.com/ChefPlex)*
