@@ -120,6 +120,20 @@ For recurring meetings, maintain a running list of all open action items below. 
 
 ---
 
+## Unknown vs Actionable
+
+**Unknown:** `A3 | Look into the certificate renewal issue | Security team | ASAP | Open`
+
+**Actionable:** `A3 | List the services still using the expiring intermediate certificate, from the certificate inventory scan, and send the list to the platform team so they can rotate before it expires on Nov 15 | Priya (Security) | Thu, Oct 22 | Open | Date is her estimate; she will say by Tuesday if it moves`
+
+A good action item answers the same questions as any report: **who** (one named person), **what** (a task that can be finished), **when** (a date, even an estimate), **where** (which systems), **why** (what it unblocks or prevents), and **how** (the source or method). In the unknown one, nobody can tell who will do what or by when, so nobody acts on it. The actionable one can be checked done or not done at the next meeting.
+
+## Where This Breaks
+
+- **Actions that roll from meeting to meeting.** An item open for three meetings is stuck. Escalate it, or close it on purpose and say why.
+- **Notes nobody reads past the first paragraph.** If the decisions and actions sit below the discussion, most people never reach them.
+- **Waiting for the full picture before writing it down.** An action with a gap ("owner to be confirmed by Friday") is still worth listing, so nobody forgets it and everyone can see it.
+
 ## Tips for Good Meeting Notes
 
 **Capture during, not after.** Notes written from memory an hour later are reconstructions, not records. Whoever is taking notes should be typing in real time - even rough notes taken live are more accurate than polished notes written later.
