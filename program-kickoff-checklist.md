@@ -8,7 +8,7 @@ This checklist covers what needs to be in place before the kickoff, what needs t
 
 ## Part 1: Pre-Kickoff - What Must Exist Before the Meeting
 
-Do not schedule the kickoff until these are done. A kickoff that happens before the foundation is ready creates false starts, not momentum.
+Do not schedule the kickoff until these are done. A kickoff that happens before the foundation is ready creates false starts, not momentum. If an item genuinely cannot be done yet, write down when it will be and who owns it, and say so at the kickoff.
 
 ### Charter and Scope
 
@@ -18,6 +18,8 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 - [ ] In-scope items explicitly listed
 - [ ] Out-of-scope items explicitly listed
 - [ ] Build vs. buy decision made and documented (if applicable)
+- [ ] Business case agreed: each problem paired with the objective that fixes it, and why now
+- [ ] Budget approved, or the date it will be approved and by whom
 
 ### Resources and Roles
 
@@ -26,7 +28,7 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 - [ ] Engineering lead named and confirmed
 - [ ] Core team roster complete with roles and allocations
 - [ ] RACI drafted (doesn't need to be final, but needs to exist)
-- [ ] Any vendor or contractor engagements initiated
+- [ ] Vendor or contractor SOWs signed, or the date they will be. Vendor work does not start without one
 
 ### Plan and Infrastructure
 
@@ -45,7 +47,7 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 
 ### Communications
 
-- [ ] Stakeholder list finalized
+- [ ] Stakeholder list started (sponsor and known owners); it fills in through discovery
 - [ ] Communications plan drafted (at minimum: cadence, channel, owner)
 - [ ] Dedicated program channel created (Slack, Teams, or equivalent)
 - [ ] Calendar invites sent for recurring syncs (team, steering committee)
