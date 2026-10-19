@@ -90,7 +90,7 @@ For each Slack sidebar section you want to cover:
 
 ```
 /slack-crawler _Domain                        ← brief in conversation
-/slack-crawler Security --canvas new              ← brief + creates a new canvas, returns ID
+/slack-crawler Security --canvas new          ← brief + creates a new canvas, returns ID
 /slack-crawler Engineering --canvas F0ABC123  ← brief + replaces that canvas
 /slack-crawler                                ← lists your available sections
 ```

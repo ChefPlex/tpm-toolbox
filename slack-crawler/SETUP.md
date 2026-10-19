@@ -114,7 +114,7 @@ Security TPM team coordination.
 
 ```
 /slack-crawler _Domain                        ← brief in conversation only
-/slack-crawler Security --canvas new              ← brief + new canvas, returns canvas ID
+/slack-crawler Security --canvas new          ← brief + new canvas, returns canvas ID
 /slack-crawler Engineering --canvas F0ABC123  ← brief + replaces that canvas
 /slack-crawler                                ← lists your available sections
 ```
