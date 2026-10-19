@@ -187,7 +187,7 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 ## Origin
 
-This tool grew out of an earlier private version, built for one internal program environment, where the tooling published cross-program state five times a day and aggregated security-channel signal hourly. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
+This tool grew out of an earlier private version, built for one internal program environment, where the tooling published cross-program state several times a day and pulled signal from the security channels as it arrived. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
 
 ---
 
