@@ -37,6 +37,7 @@ The model does not settle these. It names them in a `Needs Review` section:
 | | Status color | Coverage |
 |:---|:---|:---|
 | Slack Canvas Status Synthesis | Suggests one, labeled `Suggested status (TPM decides)` | Checked in code from the reads the run actually made, written as `<draft>.coverage.json`. An incomplete draft is marked INCOMPLETE at the top |
+| Slack crawler | Suggests one only when the messages support it, labeled `Suggested status (TPM decides)` | The brief lists the channels read out of the total, and every channel skipped with the reason |
 | Status report generator (`ai-automations`) | Suggests none. Lays out the evidence for each color and marks the field `TPM CALL` | The inputs are what you paste in, so coverage is what you chose to include |
 
 The stricter tool and the more helpful tool both follow this contract. Choose by how much help you want with the color, not by which one is "safer".

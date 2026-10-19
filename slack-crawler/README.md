@@ -90,7 +90,7 @@ For each Slack sidebar section you want to cover:
 
 ```
 /slack-crawler _Domain                        ← brief in conversation
-/slack-crawler STPM --canvas new              ← brief + creates a new canvas, returns ID
+/slack-crawler Security --canvas new              ← brief + creates a new canvas, returns ID
 /slack-crawler Engineering --canvas F0ABC123  ← brief + replaces that canvas
 /slack-crawler                                ← lists your available sections
 ```
@@ -115,7 +115,7 @@ The skill searches these paths in order and uses the first file it finds:
 # [Section Name] - Slack Crawler Brief
 > Period: Last 14 days | As of: [date/time]
 > Channels: [N readable] of [N total]
-> Overall: GREEN / YELLOW / RED - one-sentence rationale (only when the messages support one)
+> Suggested status (TPM decides): GREEN / YELLOW / RED - one-sentence rationale (only when the messages support one)
 
 ## HOT - Last 24 Hours
 - [CRITICAL] specific event - person, #channel, timestamp
@@ -187,7 +187,7 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 ## Origin
 
-This tool grew out of an earlier private version, built for one internal program environment. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
+This tool grew out of an earlier private version, built for one internal program environment, where the tooling published cross-program state five times a day and aggregated security-channel signal hourly. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
 
 ---
 

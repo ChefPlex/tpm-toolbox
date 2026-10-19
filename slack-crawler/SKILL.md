@@ -21,7 +21,7 @@ Optionally writes the brief to a Slack canvas.
 
 **Examples:**
 - `/slack-crawler _Domain` → conversation output
-- `/slack-crawler STPM --canvas new` → create canvas
+- `/slack-crawler Security --canvas new` → create canvas
 - `/slack-crawler Engineering --canvas F0XXXXXXXXX` → update canvas
 - `/slack-crawler` → list available sections
 
@@ -74,13 +74,13 @@ Classify by timestamp:
 ### PHASE 3: Compose the Brief
 
 ```
-# [Section Name] — Slack Crawler Brief
+# [Section Name] - Slack Crawler Brief
 > Period: Last 14 days | As of: [date/time]
 > Channels: [N readable] of [N total]
 
 ---
 
-## HOT — Last 24 Hours
+## HOT - Last 24 Hours
 [Bullets for new/active items from last 24h]
 - Lead with substance, not "X asked about Y"
 - Include: person, channel, timestamp, specific details
@@ -89,7 +89,7 @@ Classify by timestamp:
 
 ---
 
-## HOT — Last 3 Days
+## HOT - Last 3 Days
 [24h-3d window, no duplicates from 24h section]
 - If nothing: "No significant activity in the last 3 days."
 
@@ -113,9 +113,9 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 ## Coverage Notes
 - READ: [N] of [N total] channels, [N] truncated at the 5-page limit
 - TRUNCATED: [#channel-name](URL) - [N] pages / [N] messages read, covers [oldest read] onward, earlier messages in the window not read
-- SKIP: #channel-name — Shared/external, skipped
-- SKIP: [#channel-name](URL) — Not accessible
-- INFO: [#channel-name](URL) — Covered by script-name.sh
+- SKIP: #channel-name - Shared/external, skipped
+- SKIP: [#channel-name](URL) - Not accessible
+- INFO: [#channel-name](URL) - Covered by script-name.sh
 ```
 
 ---
@@ -140,7 +140,7 @@ Coverage: read [N] messages, [oldest read] to [newest read], window 14 days | Tr
 - Bullets over paragraphs, scannable, no filler
 - Include specific details: PR numbers, ticket IDs, timestamps, error messages
 - Only report actual events, no fabrication
-- RAG status if inferable: GREEN / YELLOW / RED with rationale
+- Suggested status (TPM decides) if inferable: GREEN / YELLOW / RED with rationale. The color is the TPM's call (see STATUS-CONTRACT.md)
 
 ---
 

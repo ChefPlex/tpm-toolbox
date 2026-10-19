@@ -10,7 +10,7 @@ Claude does the reading and drafting. The Python wrappers handle local files and
 
 ## Why This Exists
 
-The hard part of status reporting is not the writing. It's pulling a useful signal from a week of Slack noise, tracking down the current state of five concurrent workstreams, and then organizing it into a format that the right people will actually read.
+The hard part of status reporting is pulling a useful signal from a week of Slack noise, tracking down the current state of five concurrent workstreams, and then organizing it into a format that the right people will actually read.
 
 This tool does the first-pass assembly. It reads your sources, applies your template, and produces a draft that's correct enough to edit rather than blank enough to dread. The draft is not the source of truth. Your review is.
 

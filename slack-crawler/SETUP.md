@@ -70,11 +70,11 @@ To include one: open the channel in Slack → click the channel name → "Copy l
 ### A Complete Example
 
 ```markdown
-# Slack Sections — Channel Registry
+# Slack Sections - Channel Registry
 
 **Author:** Your Name (you@yourcompany.com)
 **Last updated:** 2026-05-24
-**Sections documented:** `_Engineering`, `STPM`
+**Sections documented:** `_Engineering`, `Security`
 
 ---
 
@@ -92,7 +92,7 @@ Core engineering program channels.
 
 ---
 
-## Section: `STPM`
+## Section: `Security`
 
 Security TPM team coordination.
 
@@ -114,13 +114,13 @@ Security TPM team coordination.
 
 ```
 /slack-crawler _Domain                        ← brief in conversation only
-/slack-crawler STPM --canvas new              ← brief + new canvas, returns canvas ID
+/slack-crawler Security --canvas new              ← brief + new canvas, returns canvas ID
 /slack-crawler Engineering --canvas F0ABC123  ← brief + replaces that canvas
 /slack-crawler                                ← lists your available sections
 ```
 
 **Matching rules:**
-- Case-insensitive: `stpm`, `STPM`, `Stpm` all work
+- Case-insensitive: `security`, `SECURITY`, `Security` all work
 - Leading underscores ignored: `_Domain` and `Domain` match the same section
 
 ---
@@ -165,7 +165,7 @@ Send them this repo link and point them to Step 2.
 ## Quick Reference Card
 
 ```
-/slack-crawler — Setup Checklist
+/slack-crawler - Setup Checklist
 
 □ 1. Install skill:
       mkdir -p ~/.claude/skills/slack-crawler

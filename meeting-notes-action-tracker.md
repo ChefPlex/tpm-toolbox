@@ -2,7 +2,7 @@
 
 A meeting that produces no written record is a meeting that happened in parallel in everyone's head - which means the decisions made, the actions assigned, and the context discussed will diverge the moment the call ends. This template fixes that.
 
-The goal is not comprehensive documentation. It's capturing the three things that actually matter: decisions made, actions assigned, and open questions that need to be resolved. Everything else is optional.
+The goal is to capture the three things that matter: decisions made, actions assigned, and open questions that need to be resolved. Everything else is optional.
 
 Fill this in during the meeting, not after. Circulate it within 24 hours. Put the action items in your tracker before you close the document.
 
