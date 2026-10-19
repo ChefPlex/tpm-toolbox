@@ -1,28 +1,19 @@
 # tpm-toolbox
 
-Practical tools for Technical Program Managers: templates, trackers, and scripts built from real program work.
+Working tools with code for Technical Program Managers, built from real program work.
 
 The goal is to spend less time on the mechanical parts of program management and more time on the judgment parts.
 
-**This repo is the things that run.** The documents they produce - charters, RAID guides, RACI
-matrices, close-out reports - are in [tpm-templates](https://github.com/ChefPlex/tpm-templates).
+**This repo is the things that run.** The documents a program produces - charters, the kickoff
+checklist, the RAID log template and guide, meeting notes, RACI matrices, close-out reports - are in
+[tpm-templates](https://github.com/ChefPlex/tpm-templates).
 
-The trackers and templates below need nothing but a spreadsheet or a text editor. **The two Slack
-tools are different**: both require Claude Code and a working Slack MCP connection, which most
-people will not have set up. Better to say that here than three clicks in.
+**Both Slack tools need setup**: they require Claude Code and a working Slack MCP connection, which
+most people will not have. Better to say that here than three clicks in.
 
 ---
 
 ## What Is Here
-
-### Trackers and Templates
-
-| Tool | What It Is |
-|---|---|
-| [RAID Log Template - Excel](raid-log-template.xlsx) | A clean, ready-to-use Excel RAID log with tabs for Risks, Assumptions, Issues, and Dependencies. Color-coded, auto-calculating, zero setup required. The better choice for actually running a busy program. |
-| [RAID Log Template - Markdown](raid-log-template.md) | The same log in a format you can read before downloading anything, paste into Confluence or Notion, diff in a pull request, or open on a phone. Same fields, with a worked example in every section. |
-| [Program Kickoff Checklist](program-kickoff-checklist.md) | Pre-kickoff checklist, recommended agenda with timing, section-by-section facilitation guide, and post-kickoff follow-up checklist. |
-| [Meeting Notes + Action Item Tracker](meeting-notes-action-tracker.md) | Template for capturing decisions, actions, open questions, and risks in a meeting. Includes a running tracker for recurring meetings. |
 
 ### Scripts and Automation
 
@@ -37,9 +28,6 @@ people will not have set up. Better to say that here than three clicks in.
 
 | Tool | Status | Notes |
 |---|---|---|
-| Program Kickoff Checklist | Ready | Good for getting scope, stakeholders, risks, dependencies, and operating rhythm aligned before kickoff. |
-| Meeting Notes + Action Item Tracker | Ready | Useful for recurring execution hygiene and follow-through. |
-| RAID Log Template (Excel and Markdown) | Ready | Solid base tracker, same fields either way. Pair it with the RAID Log Guide in `tpm-templates`. |
 | Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. A skill, so its paging and coverage line are instructions to Claude, not checks in code, and there is no automated test. |
 | Slack Canvas Status Synthesis | Working | Draft output only, reviewed before publishing. Tested: `test_slack_status.py` runs both scripts end to end against recorded tool-call transcripts (template schema, smuggled instructions, sensitive data, tool boundary, observed coverage). A real setup is checked with `--doctor`. |
 
@@ -108,7 +96,7 @@ A polished draft is not the system of record.
 
 These tools are designed to work alongside the templates in [tpm-templates](https://github.com/ChefPlex/tpm-templates).
 
-The RAID log here is the working file. The [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) explains how to run it.
+The RAID log, the kickoff checklist and the meeting notes tracker that used to live here are now in tpm-templates, beside the [RAID Log Guide](https://github.com/ChefPlex/tpm-templates/blob/main/raid-log-guide.md) and the rest of the program documents.
 
 The status synthesis tool produces drafts in whatever format your existing status canvas already uses, which means it works with the reporting structure in [program-reporting-frameworks](https://github.com/ChefPlex/program-reporting-frameworks).
 
@@ -141,7 +129,7 @@ Two licenses, one rule: **code is MIT, documents are CC BY 4.0.**
 | What | License |
 |:---|:---|
 | The code: everything in [`slack-canvas-status-synthesis/`](slack-canvas-status-synthesis/) except its Markdown | [MIT](slack-canvas-status-synthesis/LICENSE). Use it in your own tooling, commercial or not, with the notice kept |
-| Everything else: templates, guides, the RAID log workbook, the Slack Crawler skill, and all Markdown | [CC BY 4.0](LICENSE). Use it, adapt it, put it to work in your own program. Credit is the only condition |
+| Everything else: the Slack Crawler skill, the status contract, and all Markdown | [CC BY 4.0](LICENSE). Use it, adapt it, put it to work in your own program. Credit is the only condition |
 
 Copyright (c) 2024-2026 Eric White.
 
