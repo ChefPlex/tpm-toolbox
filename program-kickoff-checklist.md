@@ -2,13 +2,13 @@
 
 A program kickoff is the moment a team officially starts working together toward a shared objective. The whole value is settling scope, roles and working norms before anyone writes a line of code or opens a remediation ticket, because each of those gets harder to renegotiate the longer the program runs. The failed version is a deck nobody remembers.
 
-This checklist covers what needs to be in place before the kickoff, what needs to happen in the kickoff, and what needs to happen right after. Use it every time. The programs where you skip steps are the ones that teach you why the steps exist.
+This checklist covers what needs to be in place before the kickoff, what needs to happen in the kickoff, and what needs to happen right after. Go through it every time. Not every item fits every program: skip the ones that do not, and go deeper on the ones that matter more than usual. The point is to think about each one before the kickoff, so nothing catches you off guard later.
 
 ---
 
 ## Part 1: Pre-Kickoff - What Must Exist Before the Meeting
 
-Do not schedule the kickoff until these are done. A kickoff that happens before the foundation is ready creates false starts, not momentum. If an item genuinely cannot be done yet, write down when it will be and who owns it, and say so at the kickoff.
+Get as many of these in place as you can before the meeting. A kickoff that happens before the foundation is ready creates false starts, not momentum. If an item genuinely cannot be done yet, write down when it will be and who owns it, and say so at the kickoff.
 
 ### Charter and Scope
 
@@ -28,7 +28,7 @@ Do not schedule the kickoff until these are done. A kickoff that happens before 
 - [ ] Engineering lead named and confirmed
 - [ ] Core team roster complete with roles and allocations
 - [ ] RACI drafted (doesn't need to be final, but needs to exist)
-- [ ] Vendor or contractor SOWs signed, or the date they will be. Vendor work does not start without one
+- [ ] Vendor or contractor SOWs signed, or the date they will be
 
 ### Plan and Infrastructure
 
