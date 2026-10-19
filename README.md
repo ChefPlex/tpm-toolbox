@@ -147,4 +147,4 @@ Copyright (c) 2024-2026 Eric White.
 
 ---
 
-**Part of the ChefPlex TPM portfolio** · Status: Active · [I need to… find the right document across all the repositories](https://github.com/ChefPlex/tpm-templates/blob/main/PORTFOLIO-GUIDE.md) · [All repositories](https://github.com/ChefPlex)
+**Part of the ChefPlex TPM portfolio** | Status: Active | [I need to… find the right document across all the repositories](https://github.com/ChefPlex/tpm-templates/blob/main/PORTFOLIO-GUIDE.md) | [All repositories](https://github.com/ChefPlex)

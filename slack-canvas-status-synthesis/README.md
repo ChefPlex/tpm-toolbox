@@ -65,7 +65,7 @@ This reads the canvas, asks Claude to replace names, ticket IDs, links, dates, a
 - **No tool names.** Template text, emoji keys included, is pasted into the generator's prompt, so a field that names a Slack tool (`slack_read_channel`, `mcp__…`) is rejected: that is an instruction written into the canvas, not formatting guidance. Placeholders such as `{{slack_handle}}` are fine. A paraphrased instruction ("also read channel C0…") is not caught here. It is caught when the generator runs, because a read of a source you did not request fails the run.
 - **Sensitive data.** The prompt asks for placeholders, and the code checks it got them: links, email addresses, Slack mentions and Slack IDs are reported by field. Add your own confidential terms (a codename, a customer) to `SENSITIVE_TERMS`, comma-separated. The scan catches patterns, not every internal name, so still review the JSON before sharing it. For a false positive, `--accept-sensitive-findings` saves anyway without changing the prompt.
 
-Exit codes: `0` saved · `1` the run failed · `2` usage error, or an output path git would commit · `3` not saved: the template failed a check, or the run read something other than the canvas you named.
+Exit codes: `0` saved; `1` the run failed; `2` usage error, or an output path git would commit; `3` not saved: the template failed a check, or the run read something other than the canvas you named.
 
 Run this once per template. Re-run if the status format changes significantly.
 
@@ -118,7 +118,7 @@ Use `none` on either position if you only have channels or only have canvases:
 | `--doctor` | Check the setup and the tool boundary, then exit |
 | `--doctor-channel ID` | With `--doctor`, read one message from this channel to check the connector itself |
 
-Exit codes: `0` draft written · `1` the run failed · `2` usage or template error, or an output path git would commit · `3` the run left its boundary (a tool other than the Slack reads, or a source you did not request), so nothing was written · `4` with `--strict`, coverage is not confirmed complete.
+Exit codes: `0` draft written; `1` the run failed; `2` usage or template error, or an output path git would commit; `3` the run left its boundary (a tool other than the Slack reads, or a source you did not request), so nothing was written; `4` with `--strict`, coverage is not confirmed complete.
 
 ---
 
