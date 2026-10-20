@@ -5,7 +5,7 @@ It's the authoritative source when running the skill or building canvas cron scr
 
 **How to use in a cron script:**
 - Copy the channel IDs from the section you want to monitor
-- Use `slack_read_channel` (not `slack_search_public`) with `limit=100` and `response_format=concise` (the same limit the skill uses; a channel with more messages than that in the window is truncated, so report it as truncated)
+- Use `slack_read_channel` (not `slack_search_public`) with `limit=100` and `response_format=concise`, and follow `next_cursor` for up to 5 pages (500 messages) per channel, the same limit the skill uses. A channel that still has a `next_cursor` after 5 pages is truncated, so report it as truncated
 - Batch reads to avoid rate limits (2-3 channels per batch)
 - Private channels (🔒) are accessible via API if you're a member
 - Shared/external channels (🔗) are not found by `slack_search_channels`, but are readable by ID if you are a member
