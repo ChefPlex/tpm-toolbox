@@ -67,6 +67,12 @@ check(any("non-empty" in e for e in common.validate_template({"sections": [], "d
 no_risk = dict(GOOD, sections=[GOOD["sections"][0]])
 check(any("risks" in e for e in common.validate_template(no_risk)),
       "a template that lost its Risks / Blockers section is rejected")
+tasks_only = dict(GOOD, sections=[dict(GOOD["sections"][0], name="Tasks")])
+check(any("risks" in e for e in common.validate_template(tasks_only)),
+      "a section named 'Tasks' does not count as a risks section")
+asks = dict(GOOD, sections=[GOOD["sections"][0], dict(GOOD["sections"][0], name="Asks")])
+check(not any("risks" in e for e in common.validate_template(asks)),
+      "a section named 'Asks' does count as a risks section")
 check(any("data_sources" in e for e in common.validate_template(dict(GOOD, data_sources=[]))),
       "data_sources as a list is a clear error, not an AttributeError")
 check(any("lookback_days" in e for e in common.validate_template(dict(GOOD, data_sources={"lookback_days": "last week"}))),

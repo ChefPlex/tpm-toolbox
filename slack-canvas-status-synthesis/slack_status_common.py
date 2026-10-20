@@ -250,8 +250,9 @@ def surface_report(run: RunResult, read_tools: tuple[str, ...]) -> tuple[list[st
 # `{{slack_handle}}`-style placeholders are removed before this runs, so they never match.
 _TOOL_NAME = re.compile(r"mcp__|\bslack_(?:read|send|schedule|create|update|search|delete|post)\w*", re.I)
 _PLACEHOLDER = re.compile(r"\{\{[^{}]*\}\}")
-_RISK_SECTION = re.compile(r"risk|blocker|issue|escalat|concern|red flag|watch|impediment|threat|"
-                           r"dependenc|ask", re.I)
+# Word-start stems, so "Tasks" or "Masked" never pass as a risks section; "ask" must be a whole word.
+_RISK_SECTION = re.compile(r"\b(?:risk|blocker|issue|escalat|concern|red flag|watch|impediment|threat|"
+                           r"dependenc|asks?\b)", re.I)
 # Fields the wrapper sets itself, so they are not template text.
 _WRAPPER_FIELDS = ("$.template_name", "$.source_canvas_id")
 

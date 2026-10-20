@@ -1,6 +1,6 @@
 # Status Contract
 
-The rules every AI-assisted status report in these repositories follows. Two tools draft status reports: the [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) scripts here, and the [status report generator](https://github.com/ChefPlex/ai-automations/tree/main/status-report-generator) in `ai-automations`. They present a draft differently. They do not differ on what a draft is allowed to decide.
+The rules every AI-assisted status report in these repositories follows. Three tools draft status reports: the [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) scripts and the [Slack crawler](slack-crawler/) here, and the [status report generator](https://github.com/ChefPlex/ai-automations/tree/main/status-report-generator) in `ai-automations`. They present a draft differently. They do not differ on what a draft is allowed to decide.
 
 ---
 
@@ -23,7 +23,7 @@ The model does not settle these. It names them in a `Needs Review` section:
 
 - **The status color.** Red, Yellow or Green is a judgment about risk and confidence, and it belongs to the TPM.
 - **The risk call and any escalation.**
-- **Whether the report is published**, and to whom. Neither tool posts anything.
+- **Whether the report is published**, and to whom. No tool publishes a status of record. The Slack crawler writes its brief to a Slack canvas only when run with `--canvas`, and only to the canvas named; the other two write local files.
 
 ## What every draft must carry
 
