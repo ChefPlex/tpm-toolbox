@@ -131,7 +131,7 @@ Two licenses, one rule: **code is MIT, documents are CC BY 4.0.**
 | The code: everything in [`slack-canvas-status-synthesis/`](slack-canvas-status-synthesis/) except its Markdown | [MIT](slack-canvas-status-synthesis/LICENSE). Use it in your own tooling, commercial or not, with the notice kept |
 | Everything else: the Slack Crawler skill, the status contract, and all Markdown | [CC BY 4.0](LICENSE). Use it, adapt it, put it to work in your own program. Credit is the only condition |
 
-Copyright (c) 2024-2026 Eric White.
+Copyright (c) 2026 Eric White.
 
 ---
 
