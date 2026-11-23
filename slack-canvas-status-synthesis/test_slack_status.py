@@ -102,8 +102,8 @@ leaky["sections"][0]["content_guidelines"] = "See https://corp.slack.com/x and a
 kinds = {k for _, k, _ in common.sensitive_findings(leaky)}
 check({"link", "email address", "Slack ID"} <= kinds, f"a link, an email and a Slack ID are found (got {sorted(kinds)})")
 check(common.sensitive_findings(GOOD) == [], "placeholders and the wrapper-set canvas ID are not findings")
-os.environ["SENSITIVE_TERMS"] = "Project Falcon"
-check(any(k == "listed sensitive term" for _, k, _ in common.sensitive_findings(dict(GOOD, summary="Project Falcon weekly"))),
+os.environ["SENSITIVE_TERMS"] = "Project Bluewren"
+check(any(k == "listed sensitive term" for _, k, _ in common.sensitive_findings(dict(GOOD, summary="Project Bluewren weekly"))),
       "a term listed in SENSITIVE_TERMS is found")
 del os.environ["SENSITIVE_TERMS"]
 
