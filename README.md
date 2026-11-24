@@ -19,8 +19,8 @@ most people will not have. Better to say that here than three clicks in.
 
 | Tool | What It Is |
 |---|---|
-| [Slack Crawler](slack-crawler/) | Claude Code skill I built and open-sourced here. Reads all channels in a named Slack sidebar section and produces a structured two-week intelligence brief, with hot callouts for the last 24 hours and three days at the top. Runs on demand. Optionally writes the brief to a Slack canvas. |
-| [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) | Two-script workflow that reads a Slack canvas to extract a reusable status template, then uses that template to generate a draft status report from your Slack channels and canvases. Draft output only. Review before posting. |
+| [Slack Canvas Status Synthesis](slack-canvas-status-synthesis/) | Two Python scripts with tests. One reads a Slack canvas to extract a reusable status template; the other uses that template to generate a draft status report from your Slack channels and canvases, with a record of which sources it actually read. Draft output only. Review before posting. |
+| [Slack Crawler](slack-crawler/) | A Claude Code skill, not code: a prompt that reads all channels in a named Slack sidebar section and produces a structured two-week brief, with hot callouts for the last 24 hours and three days at the top. Runs on demand. Optionally writes the brief to a Slack canvas. No automated test. |
 
 ---
 
@@ -28,14 +28,21 @@ most people will not have. Better to say that here than three clicks in.
 
 | Tool | Status | Notes |
 |---|---|---|
-| Slack Crawler | Working | Strong signal-gathering workflow. Requires Claude Code and Slack MCP setup. A skill, so its paging and coverage line are instructions to Claude, not checks in code, and there is no automated test. |
-| Slack Canvas Status Synthesis | Working | Draft output only, reviewed before publishing. Tested: `test_slack_status.py` runs both scripts end to end against recorded tool-call transcripts (template schema, smuggled instructions, sensitive data, tool boundary, observed coverage). A real setup is checked with `--doctor`. |
+| Slack Canvas Status Synthesis | Working, tested | Draft output only, reviewed before publishing. Tested: `test_slack_status.py` runs both scripts end to end against recorded tool-call transcripts (template schema, smuggled instructions, sensitive data, tool boundary, observed coverage). A real setup is checked with `--doctor`. |
+| Slack Crawler | Working, skill only | Requires Claude Code and Slack MCP setup. A skill, so its paging and coverage line are instructions to Claude, not checks in code, and there is no automated test. |
+
+⚠️ **What the tool boundary prevents, and what it only detects.** The synthesis scripts remove every
+write tool before the run, so a draft cannot post, edit or delete anything in Slack. Which channels
+the run reads is checked afterwards, from the recorded tool calls: a read of a channel you did not
+ask for fails the run, but the model has already seen that channel's text by then. The check stops
+the draft, not the read. Set `SLACK_MCP_CONFIG` (see the tool's README) so the run loads only your
+Slack server and your other MCP servers cannot widen what it may call.
 
 ---
 
 ## The Two-Step Status Workflow
 
-The two Slack tools are designed to work together. Run them in sequence to go from raw channel noise to a polished draft status report.
+The two Slack tools are designed to work together. Run them in sequence to go from raw channel noise to a draft status report that says which sources it read.
 
 ### Step 1: Run Slack Crawler once or twice a week
 

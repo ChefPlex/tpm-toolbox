@@ -185,6 +185,20 @@ Coverage: read N messages, [oldest read] to [newest read], window 14 days | Trun
 
 ---
 
+## Data Handling
+
+This skill sends the text of every channel in the section to a model. Before you run it on a real
+program:
+
+- Confirm your company allows that Slack data to go to the model you are using, under its terms.
+- Leave channels with secrets, credentials, customer-sensitive data, restricted incident details or
+  regulated personal data out of the section, or out of the registry.
+- Review the brief before you post it to a canvas. A canvas is visible to everyone in its channel.
+
+See [Safety and Data Handling](../README.md#safety-and-data-handling) for the rest.
+
+---
+
 ## Origin
 
 This tool grew out of an earlier private version, built for one internal program environment, where the tooling published cross-program state several times a day and pulled signal from the security channels as it arrived. The crawler is the generalized version - same core idea, configurable registry, no hardcoded organizational context.
